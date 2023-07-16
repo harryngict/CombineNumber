@@ -19,7 +19,6 @@ using namespace cocos2d::ui;
 class GameOverLayer: public Layer {
 private:
   Size layerSize;
-  void addEndGameButton();
   EventClickButtonDelegate* delegate = nullptr;
   void handleTapOnBackButton();
   void handleTapOnResetButton();

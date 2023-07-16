@@ -51,6 +51,7 @@ list(APPEND GAME_SOURCE
      Classes/AdmobManager.cpp
      Classes/AndroidLaunchingScene.cpp
      Classes/AppDelegate.cpp
+     Classes/BottomMenuBarLayer.cpp
      Classes/ColorFactory.cpp
      Classes/DrawLineObject.cpp
      Classes/GameBoard.cpp
@@ -60,12 +61,14 @@ list(APPEND GAME_SOURCE
      Classes/HomeScene.cpp
      Classes/NumberObject.cpp
      Classes/RandomNumber.cpp
+     Classes/SoundManager.cpp
      Classes/TopMenuBarLayer.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AdmobManager.h
      Classes/AndroidLaunchingScene.h
      Classes/AppDelegate.h
+     Classes/BottomMenuBarLayer.h
      Classes/ColorFactory.h
      Classes/CustomButton.h
      Classes/DrawLineObject.h
@@ -79,7 +82,9 @@ list(APPEND GAME_HEADER
      Classes/HomeScene.h
      Classes/NumberObject.h
      Classes/RandomNumber.h
+     Classes/SoundManager.h
      Classes/TopMenuBarLayer.h
+     Classes/UndoData.h
      )
 
 if(ANDROID)

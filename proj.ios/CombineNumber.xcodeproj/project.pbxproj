@@ -21,15 +21,17 @@
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
-		86171BF52A62C149007A94B3 /* combine-number.png in Resources */ = {isa = PBXBuildFile; fileRef = 86171BF42A62C149007A94B3 /* combine-number.png */; };
+		86586EBD2A66627D00E3D0F7 /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86586EBB2A66627D00E3D0F7 /* SoundManager.cpp */; };
+		86586EC62A66676500E3D0F7 /* click_button_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86586EC12A66676400E3D0F7 /* click_button_sound.mp3 */; };
+		86586EC82A66676500E3D0F7 /* touch_number_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86586EC32A66676400E3D0F7 /* touch_number_sound.mp3 */; };
+		86586ECA2A66676500E3D0F7 /* increase_number_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86586EC52A66676500E3D0F7 /* increase_number_sound.mp3 */; };
+		86586ECC2A66749000E3D0F7 /* game_over_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86586ECB2A66749000E3D0F7 /* game_over_sound.mp3 */; };
 		868A50832A616B2E00B8B54F /* HomeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 868A50812A616B2E00B8B54F /* HomeScene.cpp */; };
 		868A50852A61800A00B8B54F /* play_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 868A50842A61800A00B8B54F /* play_button.png */; };
-		868A50872A6185E500B8B54F /* earn_point_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 868A50862A6185E500B8B54F /* earn_point_icon.png */; };
-		868A50892A618A5100B8B54F /* maximum_number_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 868A50882A618A5100B8B54F /* maximum_number_icon.png */; };
 		868A508E2A61AFEC00B8B54F /* guide_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 868A508D2A61AFEC00B8B54F /* guide_icon.png */; };
 		868A50912A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 868A508F2A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp */; };
 		868A50982A61F7FD00B8B54F /* AdmobManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 868A50962A61F7FD00B8B54F /* AdmobManager.cpp */; };
-		868A509C2A61F8A900B8B54F /* AdmobIOSWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 868A509B2A61F8A900B8B54F /* AdmobIOSWrapper.mm */; };
+		868A509C2A61F8A900B8B54F /* CallNativeIOSWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 868A509B2A61F8A900B8B54F /* CallNativeIOSWrapper.mm */; };
 		868A509F2A61F91100B8B54F /* AdmobIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 868A509E2A61F91100B8B54F /* AdmobIOS.m */; };
 		868A50C52A61F9AB00B8B54F /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868A50B92A61F9AB00B8B54F /* nanopb.xcframework */; };
 		868A50C62A61F9AB00B8B54F /* Promises-LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 868A50BB2A61F9AB00B8B54F /* Promises-LICENSE */; };
@@ -47,7 +49,6 @@
 		8692E09D2A5E9215002B21DD /* NumberObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8692E09B2A5E9215002B21DD /* NumberObject.cpp */; };
 		8692E0A02A5E9E00002B21DD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8692E09F2A5E9E00002B21DD /* MediaPlayer.framework */; };
 		8692E0A42A604400002B21DD /* DrawLineObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8692E0A22A604400002B21DD /* DrawLineObject.cpp */; };
-		86AAC05C2A6397BF001D9E50 /* light-off-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AAC05A2A6397BE001D9E50 /* light-off-icon.png */; };
 		86AAC05D2A6397BF001D9E50 /* light-on-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AAC05B2A6397BE001D9E50 /* light-on-icon.png */; };
 		86DD54B929496BC2009AA4DC /* AndroidLaunchingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86DD54A029496BC2009AA4DC /* AndroidLaunchingScene.cpp */; };
 		86DD54BE29496BC2009AA4DC /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86DD54AD29496BC2009AA4DC /* GameScene.cpp */; };
@@ -64,6 +65,15 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
+		DD0BD52F2A6ADA8A00B5547B /* BottomMenuBarLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD0BD52D2A6ADA8A00B5547B /* BottomMenuBarLayer.cpp */; };
+		DD0BD5352A6AF51400B5547B /* undo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0BD5342A6AF51400B5547B /* undo-icon.png */; };
+		DD3A06712A66C1CC006CBA53 /* sound-on-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD3A066F2A66C1CC006CBA53 /* sound-on-icon.png */; };
+		DD3A06722A66C1CC006CBA53 /* sound-off-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD3A06702A66C1CC006CBA53 /* sound-off-icon.png */; };
+		DDA8A46C2A6A9D22008BEFD3 /* launching-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = DDA8A46B2A6A9D22008BEFD3 /* launching-screen.png */; };
+		DDCECDC72A6BF00000883213 /* hammer-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCECDC62A6BF00000883213 /* hammer-icon.png */; };
+		DDCECDCA2A6C03F200883213 /* earn_point_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCECDC82A6C03F200883213 /* earn_point_icon.png */; };
+		DDCECDCB2A6C03F200883213 /* maximum_number_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCECDC92A6C03F200883213 /* maximum_number_icon.png */; };
+		DDCECDD12A6C1B5400883213 /* remove_number_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DDCECDD02A6C1B5400883213 /* remove_number_sound.mp3 */; };
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 /* End PBXBuildFile section */
 
@@ -111,20 +121,23 @@
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		86171BF42A62C149007A94B3 /* combine-number.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "combine-number.png"; sourceTree = "<group>"; };
 		86171BFD2A638A1B007A94B3 /* CustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		86586EBB2A66627D00E3D0F7 /* SoundManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
+		86586EBC2A66627D00E3D0F7 /* SoundManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		86586EC12A66676400E3D0F7 /* click_button_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click_button_sound.mp3; sourceTree = "<group>"; };
+		86586EC32A66676400E3D0F7 /* touch_number_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = touch_number_sound.mp3; sourceTree = "<group>"; };
+		86586EC52A66676500E3D0F7 /* increase_number_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = increase_number_sound.mp3; sourceTree = "<group>"; };
+		86586ECB2A66749000E3D0F7 /* game_over_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = game_over_sound.mp3; sourceTree = "<group>"; };
 		868A50812A616B2E00B8B54F /* HomeScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HomeScene.cpp; sourceTree = "<group>"; };
 		868A50822A616B2E00B8B54F /* HomeScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeScene.h; sourceTree = "<group>"; };
 		868A50842A61800A00B8B54F /* play_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play_button.png; sourceTree = "<group>"; };
-		868A50862A6185E500B8B54F /* earn_point_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earn_point_icon.png; sourceTree = "<group>"; };
-		868A50882A618A5100B8B54F /* maximum_number_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maximum_number_icon.png; sourceTree = "<group>"; };
 		868A508D2A61AFEC00B8B54F /* guide_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_icon.png; sourceTree = "<group>"; };
 		868A508F2A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuideLinePopUpLayer.cpp; sourceTree = "<group>"; };
 		868A50902A61BBEF00B8B54F /* GuideLinePopUpLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuideLinePopUpLayer.h; sourceTree = "<group>"; };
 		868A50962A61F7FD00B8B54F /* AdmobManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdmobManager.cpp; sourceTree = "<group>"; };
 		868A50972A61F7FD00B8B54F /* AdmobManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdmobManager.h; sourceTree = "<group>"; };
-		868A509A2A61F87200B8B54F /* AdmobIOSWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdmobIOSWrapper.h; sourceTree = "<group>"; };
-		868A509B2A61F8A900B8B54F /* AdmobIOSWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AdmobIOSWrapper.mm; sourceTree = "<group>"; };
+		868A509A2A61F87200B8B54F /* CallNativeIOSWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallNativeIOSWrapper.h; sourceTree = "<group>"; };
+		868A509B2A61F8A900B8B54F /* CallNativeIOSWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CallNativeIOSWrapper.mm; sourceTree = "<group>"; };
 		868A509D2A61F8F300B8B54F /* AdmobIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdmobIOS.h; sourceTree = "<group>"; };
 		868A509E2A61F91100B8B54F /* AdmobIOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdmobIOS.m; sourceTree = "<group>"; };
 		868A50B92A61F9AB00B8B54F /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
@@ -148,7 +161,6 @@
 		8692E09F2A5E9E00002B21DD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		8692E0A22A604400002B21DD /* DrawLineObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DrawLineObject.cpp; sourceTree = "<group>"; };
 		8692E0A32A604400002B21DD /* DrawLineObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawLineObject.h; sourceTree = "<group>"; };
-		86AAC05A2A6397BE001D9E50 /* light-off-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-off-icon.png"; sourceTree = "<group>"; };
 		86AAC05B2A6397BE001D9E50 /* light-on-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-on-icon.png"; sourceTree = "<group>"; };
 		86DD549929496BC1009AA4DC /* AndroidLaunchingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AndroidLaunchingScene.h; sourceTree = "<group>"; };
 		86DD54A029496BC2009AA4DC /* AndroidLaunchingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AndroidLaunchingScene.cpp; sourceTree = "<group>"; };
@@ -173,6 +185,17 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		DD0BD52D2A6ADA8A00B5547B /* BottomMenuBarLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BottomMenuBarLayer.cpp; sourceTree = "<group>"; };
+		DD0BD52E2A6ADA8A00B5547B /* BottomMenuBarLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BottomMenuBarLayer.h; sourceTree = "<group>"; };
+		DD0BD5342A6AF51400B5547B /* undo-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "undo-icon.png"; sourceTree = "<group>"; };
+		DD0BD5372A6B062000B5547B /* UndoData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UndoData.h; sourceTree = "<group>"; };
+		DD3A066F2A66C1CC006CBA53 /* sound-on-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-on-icon.png"; sourceTree = "<group>"; };
+		DD3A06702A66C1CC006CBA53 /* sound-off-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-off-icon.png"; sourceTree = "<group>"; };
+		DDA8A46B2A6A9D22008BEFD3 /* launching-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launching-screen.png"; sourceTree = "<group>"; };
+		DDCECDC62A6BF00000883213 /* hammer-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hammer-icon.png"; sourceTree = "<group>"; };
+		DDCECDC82A6C03F200883213 /* earn_point_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earn_point_icon.png; sourceTree = "<group>"; };
+		DDCECDC92A6C03F200883213 /* maximum_number_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maximum_number_icon.png; sourceTree = "<group>"; };
+		DDCECDD02A6C1B5400883213 /* remove_number_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = remove_number_sound.mp3; sourceTree = "<group>"; };
 		ED545A7B1B68A1F400C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -230,8 +253,8 @@
 		1AF87B461F6F77D6007BE51C /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				86171BF42A62C149007A94B3 /* combine-number.png */,
-				868A50992A61F86B00B8B54F /* Admod */,
+				DDA8A46B2A6A9D22008BEFD3 /* launching-screen.png */,
+				868A50992A61F86B00B8B54F /* NativeiOS */,
 				1A88B2631FC3D9C9005C14AE /* Images.xcassets */,
 				1AF87B471F6F77D6007BE51C /* AppController.h */,
 				1AF87B481F6F77D6007BE51C /* AppController.mm */,
@@ -291,6 +314,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				86586EBE2A6664D100E3D0F7 /* soundeffects */,
 				868E5A5E2944A97F0087D208 /* images */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
@@ -326,27 +350,44 @@
 				86EEFFB42A61485E00B1D37F /* GameOverLayer.cpp */,
 				86EEFFB82A614C8E00B1D37F /* TopMenuBarLayer.h */,
 				86EEFFB72A614C8E00B1D37F /* TopMenuBarLayer.cpp */,
+				DD0BD52E2A6ADA8A00B5547B /* BottomMenuBarLayer.h */,
+				DD0BD52D2A6ADA8A00B5547B /* BottomMenuBarLayer.cpp */,
 				868A50902A61BBEF00B8B54F /* GuideLinePopUpLayer.h */,
 				868A508F2A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp */,
 				86171BFD2A638A1B007A94B3 /* CustomButton.h */,
 				8692E0922A5E58DF002B21DD /* GameConfig.h */,
 				86EEFFB32A6145D000B1D37F /* GameBoardDelegate.h */,
 				86EEFFBA2A6163D200B1D37F /* EventClickButtonDelegate.h */,
+				86586EBC2A66627D00E3D0F7 /* SoundManager.h */,
+				86586EBB2A66627D00E3D0F7 /* SoundManager.cpp */,
+				DD0BD5372A6B062000B5547B /* UndoData.h */,
 			);
 			name = Classes;
 			path = ../Classes;
 			sourceTree = "<group>";
 		};
-		868A50992A61F86B00B8B54F /* Admod */ = {
+		86586EBE2A6664D100E3D0F7 /* soundeffects */ = {
 			isa = PBXGroup;
 			children = (
-				868A50B82A61F9AB00B8B54F /* GoogleMobileAdsSdkiOS-10.8.0 */,
-				868A509A2A61F87200B8B54F /* AdmobIOSWrapper.h */,
-				868A509B2A61F8A900B8B54F /* AdmobIOSWrapper.mm */,
+				DDCECDD02A6C1B5400883213 /* remove_number_sound.mp3 */,
+				86586ECB2A66749000E3D0F7 /* game_over_sound.mp3 */,
+				86586EC12A66676400E3D0F7 /* click_button_sound.mp3 */,
+				86586EC52A66676500E3D0F7 /* increase_number_sound.mp3 */,
+				86586EC32A66676400E3D0F7 /* touch_number_sound.mp3 */,
+			);
+			path = soundeffects;
+			sourceTree = "<group>";
+		};
+		868A50992A61F86B00B8B54F /* NativeiOS */ = {
+			isa = PBXGroup;
+			children = (
+				868A509A2A61F87200B8B54F /* CallNativeIOSWrapper.h */,
+				868A509B2A61F8A900B8B54F /* CallNativeIOSWrapper.mm */,
 				868A509D2A61F8F300B8B54F /* AdmobIOS.h */,
 				868A509E2A61F91100B8B54F /* AdmobIOS.m */,
+				868A50B82A61F9AB00B8B54F /* GoogleMobileAdsSdkiOS-10.8.0 */,
 			);
-			path = Admod;
+			path = NativeiOS;
 			sourceTree = "<group>";
 		};
 		868A50B82A61F9AB00B8B54F /* GoogleMobileAdsSdkiOS-10.8.0 */ = {
@@ -378,11 +419,14 @@
 		868E5A5E2944A97F0087D208 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				86AAC05A2A6397BE001D9E50 /* light-off-icon.png */,
+				DDCECDC82A6C03F200883213 /* earn_point_icon.png */,
+				DDCECDC92A6C03F200883213 /* maximum_number_icon.png */,
+				DDCECDC62A6BF00000883213 /* hammer-icon.png */,
+				DD0BD5342A6AF51400B5547B /* undo-icon.png */,
+				DD3A06702A66C1CC006CBA53 /* sound-off-icon.png */,
+				DD3A066F2A66C1CC006CBA53 /* sound-on-icon.png */,
 				86AAC05B2A6397BE001D9E50 /* light-on-icon.png */,
 				868A508D2A61AFEC00B8B54F /* guide_icon.png */,
-				868A50882A618A5100B8B54F /* maximum_number_icon.png */,
-				868A50862A6185E500B8B54F /* earn_point_icon.png */,
 				868A50842A61800A00B8B54F /* play_button.png */,
 				86EEFFBF2A61657C00B1D37F /* back_button.png */,
 				86EEFFC02A61657C00B1D37F /* reset_button.png */,
@@ -465,22 +509,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDCECDCA2A6C03F200883213 /* earn_point_icon.png in Resources */,
 				868A50C92A61F9AB00B8B54F /* GoogleUtilities-LICENSE in Resources */,
-				868A50892A618A5100B8B54F /* maximum_number_icon.png in Resources */,
+				DD3A06712A66C1CC006CBA53 /* sound-on-icon.png in Resources */,
 				868A50C62A61F9AB00B8B54F /* Promises-LICENSE in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
-				868A50872A6185E500B8B54F /* earn_point_icon.png in Resources */,
 				868A50C82A61F9AB00B8B54F /* OpenMeasurement-LICENSE in Resources */,
+				DD3A06722A66C1CC006CBA53 /* sound-off-icon.png in Resources */,
+				DDA8A46C2A6A9D22008BEFD3 /* launching-screen.png in Resources */,
 				868A508E2A61AFEC00B8B54F /* guide_icon.png in Resources */,
 				86EEFFC22A61657C00B1D37F /* reset_button.png in Resources */,
+				86586ECC2A66749000E3D0F7 /* game_over_sound.mp3 in Resources */,
+				DD0BD5352A6AF51400B5547B /* undo-icon.png in Resources */,
 				86AAC05D2A6397BF001D9E50 /* light-on-icon.png in Resources */,
-				86171BF52A62C149007A94B3 /* combine-number.png in Resources */,
+				86586EC62A66676500E3D0F7 /* click_button_sound.mp3 in Resources */,
 				868A50852A61800A00B8B54F /* play_button.png in Resources */,
 				86EEFFC12A61657C00B1D37F /* back_button.png in Resources */,
+				DDCECDCB2A6C03F200883213 /* maximum_number_icon.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
+				DDCECDD12A6C1B5400883213 /* remove_number_sound.mp3 in Resources */,
+				DDCECDC72A6BF00000883213 /* hammer-icon.png in Resources */,
+				86586EC82A66676500E3D0F7 /* touch_number_sound.mp3 in Resources */,
 				868A50C72A61F9AB00B8B54F /* NanoPB-LICENSE in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
-				86AAC05C2A6397BF001D9E50 /* light-off-icon.png in Resources */,
+				86586ECA2A66676500E3D0F7 /* increase_number_sound.mp3 in Resources */,
 				1AF87B881F6F781D007BE51C /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,12 +547,13 @@
 				86EEFFAF2A61032200B1D37F /* ColorFactory.cpp in Sources */,
 				86DD54BE29496BC2009AA4DC /* GameScene.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
+				DD0BD52F2A6ADA8A00B5547B /* BottomMenuBarLayer.cpp in Sources */,
 				86EEFFB62A61485E00B1D37F /* GameOverLayer.cpp in Sources */,
 				86DD54B929496BC2009AA4DC /* AndroidLaunchingScene.cpp in Sources */,
 				86EEFFB92A614C8E00B1D37F /* TopMenuBarLayer.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				868A50982A61F7FD00B8B54F /* AdmobManager.cpp in Sources */,
-				868A509C2A61F8A900B8B54F /* AdmobIOSWrapper.mm in Sources */,
+				868A509C2A61F8A900B8B54F /* CallNativeIOSWrapper.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				8692E0902A5E5769002B21DD /* GameBoard.cpp in Sources */,
 				868A50832A616B2E00B8B54F /* HomeScene.cpp in Sources */,
@@ -509,6 +562,7 @@
 				86EEFFAC2A60FE6A00B1D37F /* RandomNumber.cpp in Sources */,
 				8692E0A42A604400002B21DD /* DrawLineObject.cpp in Sources */,
 				868A50912A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp in Sources */,
+				86586EBD2A66627D00E3D0F7 /* SoundManager.cpp in Sources */,
 				868A509F2A61F91100B8B54F /* AdmobIOS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,7 +589,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMPRESS_PNG_FILES = NO;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 6QDW32DV2Z;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = arm64;
@@ -560,7 +614,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
@@ -596,7 +650,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMPRESS_PNG_FILES = NO;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 6QDW32DV2Z;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -620,7 +674,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",

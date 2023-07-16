@@ -18,13 +18,13 @@ void GuideLinePopUpLayer::buildUI(float height, Color4B layerColor) {
   addChild(backgroundColor);
   moveDownAndAppearAnimation();
   
-  Label* titleLabel = Label::createWithTTF(GUIDE_TITLE_TEXT, FONT_NAME_NUMBER_LABEL, FONT_SIZE_GUIDE_LABEL);
+  Label* titleLabel = Label::createWithTTF(GUIDE_TITLE_TEXT, FONT_LABEL_NAME, FONT_SIZE_GUIDE_LABEL);
   titleLabel->setPosition(Vec2(layerSize.width/2.0, layerSize.height/2.0));
   titleLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
   titleLabel->setColor(ColorFactory::GetInstance()->getTextColor());
   addChild(titleLabel);
   
-  Label* subTitleLabel = Label::createWithTTF(GUIDE_SUB_TITLE_TEXT, FONT_NAME_NUMBER_LABEL, FONT_SIZE_GUIDE_LABEL);
+  Label* subTitleLabel = Label::createWithTTF(GUIDE_SUB_TITLE_TEXT, FONT_LABEL_NAME, FONT_SIZE_GUIDE_LABEL);
   subTitleLabel->setPosition(Vec2(titleLabel->getPositionX(), layerSize.height/2.0 - 40.0));
   subTitleLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
   subTitleLabel->setColor(ColorFactory::GetInstance()->getTextColor());

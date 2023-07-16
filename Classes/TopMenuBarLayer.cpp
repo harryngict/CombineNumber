@@ -8,9 +8,11 @@
 #include "TopMenuBarLayer.h"
 #include "GameConfig.h"
 #include "ColorFactory.h"
+#include "SoundManager.h"
 
 TopMenuBarLayer::TopMenuBarLayer() {
-  currentSuggestionCount = DEFAULT_SUGGESTION_TIME;
+  currentPoint = 0;
+  currentMaximumNumber = 2;
 }
 
 TopMenuBarLayer::~TopMenuBarLayer(){
@@ -27,37 +29,39 @@ void TopMenuBarLayer::buildUI(float height,
   addChild(backgroundColor);
   
   backButton = CustomButton::create(BACK_BUTTON_NAME, "", [&, this] { handleTapOnBackButton(); });
-  backButton->setPosition(Vec2(layerSize.width - 64.0, layerSize.height/2.0));
+  backButton->setPosition(Vec2(layerSize.width - 48.0, layerSize.height/2.0));
   addChild(backButton);
   
-  suggestionButton = CustomButton::create(LIGHT_ON_BUTTON_NAME, "", currentSuggestionCount, [&, this]{ handleTapOnSuggestionButton(); });
-  suggestionButton->setPosition(Vec2(backButton->getPositionX() - 84.0, backButton->getPositionY() + 8.0));
-  addChild(suggestionButton);
-  
   resetButton = CustomButton::create(RESET_BUTTON_NAME, "", [&, this] { handleTapOnResetButton(); });
-  resetButton->setPosition(Vec2(suggestionButton->getPositionX() - 84.0, backButton->getPositionY()));
+  resetButton->setPosition(Vec2(backButton->getPositionX() - 68.0, backButton->getPositionY()));
   addChild(resetButton);
   
+  bool isSoundOn = UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, false);
+  std::string normalImage = isSoundOn ? SOUND_BUTTON_ON_NAME : SOUND_BUTTON_OFF_NAME;
+  soundButton = CustomButton::create(normalImage, "", [&, this] { handleTapOnSoundButton(); });
+  soundButton->setPosition(Vec2(resetButton->getPositionX() - 72.0, backButton->getPositionY()));
+  addChild(soundButton);
+  
   Sprite* maximumNumberIcon = Sprite::create(MAXIMUM_NUMBER_ICON_NAME);
-  maximumNumberIcon->setPosition(64.0, resetButton->getPositionY());
+  maximumNumberIcon->setPosition(48.0, resetButton->getPositionY());
   addChild(maximumNumberIcon);
   
-  maximumNumberLabel = Label::createWithTTF(to_string(maximumNumber), FONT_NAME_NUMBER_LABEL, FONT_SIZE_EARN_MAXIMUM_LABEL_IN_GAME_SCENE);
-  maximumNumberLabel->setPosition(Vec2(maximumNumberIcon->getPositionX() + maximumNumberIcon->getContentSize().width*0.6,
+  maximumNumberLabel = Label::createWithTTF(to_string(maximumNumber), FONT_LABEL_NAME, FONT_SIZE_EARN_MAXIMUM_LABEL_IN_GAME_SCENE);
+  maximumNumberLabel->setPosition(Vec2(maximumNumberIcon->getPositionX() + maximumNumberIcon->getContentSize().width*0.5,
                                        maximumNumberIcon->getPositionY() - maximumNumberLabel->getContentSize().height/8.0));
-  maximumNumberLabel->setAnchorPoint(Vec2(0.0, 0.5));
+  maximumNumberLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
   maximumNumberLabel->setColor(ColorFactory::GetInstance()->getTextColor());
   addChild(maximumNumberLabel);
   
   Sprite* earnPointIcon = Sprite::create(EARN_POINT_ICON_NAME);
-  earnPointIcon->setPosition(maximumNumberLabel->getPositionX() + maximumNumberLabel->getContentSize().width + 72.0,
+  earnPointIcon->setPosition(maximumNumberLabel->getPositionX() + maximumNumberLabel->getContentSize().width + 48.0,
                              resetButton->getPositionY());
   addChild(earnPointIcon);
   
-  scoreLabel = Label::createWithTTF(to_string(earnPoint), FONT_NAME_NUMBER_LABEL, FONT_SIZE_EARN_MAXIMUM_LABEL_IN_GAME_SCENE);
-  scoreLabel->setPosition(Vec2(earnPointIcon->getPositionX() + earnPointIcon->getContentSize().width*0.6,
+  scoreLabel = Label::createWithTTF(to_string(earnPoint), FONT_LABEL_NAME, FONT_SIZE_EARN_MAXIMUM_LABEL_IN_GAME_SCENE);
+  scoreLabel->setPosition(Vec2(earnPointIcon->getPositionX() + earnPointIcon->getContentSize().width*0.5 + 4.0,
                                earnPointIcon->getPositionY() - scoreLabel->getContentSize().height/8.0));
-  scoreLabel->setAnchorPoint(Vec2(0.0, 0.5));
+  scoreLabel->setAnchorPoint(Vec2(Vec2::ANCHOR_MIDDLE_LEFT));
   scoreLabel->setColor(ColorFactory::GetInstance()->getTextColor());
   addChild(scoreLabel);
 }
@@ -68,42 +72,34 @@ void TopMenuBarLayer::setDelegate(EventClickButtonDelegate* delegate) {
 
 void TopMenuBarLayer::handleTapOnBackButton() {
   if(delegate == nullptr) { return; };
+  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
   delegate->clickBackButton();
 }
 
 void TopMenuBarLayer::handleTapOnResetButton() {
   if(delegate == nullptr) { return; };
+  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
   delegate->clickResetButton();
 }
 
-void TopMenuBarLayer::handleTapOnSuggestionButton() {
-  if(delegate == nullptr) { return; };
-  if(currentSuggestionCount <= 0) { return;};
-  currentSuggestionCount -= 1;
-  suggestionButton->setLabelVisibility(currentSuggestionCount > 0);
-  suggestionButton->updateText(currentSuggestionCount);
-  delegate->clickSuggestionButton();
-  if(currentSuggestionCount == 0) { suggestionButton->loadTextureNormal(LIGHT_OFF_BUTTON_NAME, cocos2d::ui::Button::TextureResType::LOCAL); }
-}
-
 void TopMenuBarLayer::updateEarnPoint(int point) {
-  if(point <= currentPoint) { return; }
-  currentPoint = point;
+  if(point == currentPoint) { return; }
   scoreLabel->setString(to_string(point));
   scoreLabel->runAction(createLabelAnimation());
+  currentPoint = point;
 }
 
 void TopMenuBarLayer::updateMaximumNumber(int number) {
-  if(number <= currentMaximumNumber) { return; }
-  currentMaximumNumber = number;
+  if(number == currentMaximumNumber) { return; }
   maximumNumberLabel->setString(to_string(number));
   maximumNumberLabel->runAction(createLabelAnimation());
+  currentMaximumNumber = number;
 }
 
 void TopMenuBarLayer::setTouchEnabledOnLayer(bool isEnabled) {
   backButton->setTouchEnabled(isEnabled);
   resetButton->setTouchEnabled(isEnabled);
-  suggestionButton->setTouchEnabled(isEnabled);
+  soundButton->setTouchEnabled(isEnabled);
 }
 
 Sequence* TopMenuBarLayer::createLabelAnimation() {
@@ -116,8 +112,19 @@ Sequence* TopMenuBarLayer::createLabelAnimation() {
 void TopMenuBarLayer::resetData() {
   currentPoint = 0;
   currentMaximumNumber = 2;
-  currentSuggestionCount = DEFAULT_SUGGESTION_TIME;
+
   scoreLabel->setString(to_string(currentPoint));
   maximumNumberLabel->setString(to_string(currentMaximumNumber));
-  suggestionButton->updateText(currentSuggestionCount);
+}
+
+void TopMenuBarLayer::handleTapOnSoundButton() {
+  bool isSoundOn = UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, false);
+  if(isSoundOn) {
+    UserDefault::getInstance()->setBoolForKey(KEY_SOUND_GAME, false);
+    soundButton->loadTextureNormal(SOUND_BUTTON_OFF_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
+  } else {
+    UserDefault::getInstance()->setBoolForKey(KEY_SOUND_GAME, true);
+    soundButton->loadTextureNormal(SOUND_BUTTON_ON_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
+  }
+  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
 }

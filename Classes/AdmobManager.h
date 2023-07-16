@@ -19,6 +19,7 @@ public:
   void init(const std::string &bannerId, const std::string &interstitialId);
   void showBanner();
   void showInterstitial(std::function<void(bool)> completion);
+  bool isBannerViewVisible();
 };
 
 #endif /* AdmobManager_h */

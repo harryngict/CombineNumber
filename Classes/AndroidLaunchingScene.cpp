@@ -28,7 +28,7 @@ bool AndroidLaunchingScene::init(){
   LayerColor* colorLayer = LayerColor::create(ColorFactory::GetInstance()->getBackgroundColor(), winSize.width, winSize.height);
   addChild(colorLayer);
   
-  Label* tileGameLabel = Label::createWithTTF(TITLE_GAME, FONT_NAME_NUMBER_LABEL, FONT_SIZE_TILE_GAME_LABEL);
+  Label* tileGameLabel = Label::createWithTTF(TITLE_GAME, FONT_LABEL_NAME, FONT_SIZE_TILE_GAME_LABEL);
   tileGameLabel->setPosition(Vec2(winSize.width/2.0, winSize.height/2.0));
   tileGameLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
   tileGameLabel->setColor(ColorFactory::GetInstance()->getTextColor());

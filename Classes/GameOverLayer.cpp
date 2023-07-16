@@ -10,6 +10,7 @@
 #include "ColorFactory.h"
 #include "ui/CocosGUI.h"
 #include "CustomButton.h"
+#include "SoundManager.h"
 
 GameOverLayer::~GameOverLayer() {
   this->delegate = nullptr;
@@ -21,33 +22,31 @@ void GameOverLayer::buildUI(float height, Color4B layerColor) {
   backgroundColor->setContentSize(layerSize);
   this->addChild(backgroundColor);
   
-  Label* label = Label::createWithTTF("GAME OVER!", FONT_NAME_NUMBER_LABEL, FONT_SIZE_GAME_OVER_LABEL);
-  label->setPosition(Vec2(layerSize.width/2.0, layerSize.height/2.0));
+  CustomButton* backButton = CustomButton::create(BACK_BUTTON_NAME, "", [&, this] { handleTapOnBackButton(); });
+  backButton->setPosition(Vec2(48.0, layerSize.height/2.0));
+  addChild(backButton);
+  
+  Label* label = Label::createWithTTF("GAME OVER!", FONT_LABEL_NAME, FONT_SIZE_GAME_OVER_LABEL);
+  label->setPosition(Vec2(layerSize.width/2.0, backButton->getPositionY() - 6.0));
   label->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
   label->setColor(ColorFactory::GetInstance()->getTextColor());
   addChild(label);
   
-  /// addEndGameButton
-  addEndGameButton();
-  moveDownAndAppearAnimation();
-}
-
-void GameOverLayer::addEndGameButton() {
-  CustomButton* backButton = CustomButton::create(BACK_BUTTON_NAME, "", [&, this] { handleTapOnBackButton(); });
-  backButton->setPosition(Vec2(64.0, layerSize.height/2.0));
-  addChild(backButton);
-  
   CustomButton* resetButton = CustomButton::create(RESET_BUTTON_NAME, "", [&, this] { handleTapOnResetButton(); });
-  resetButton->setPosition(Vec2(layerSize.width - 64.0, backButton->getPositionY()));
+  resetButton->setPosition(Vec2(layerSize.width - 48.0  , backButton->getPositionY()));
   addChild(resetButton);
+
+  moveDownAndAppearAnimation();
 }
 
 void GameOverLayer::handleTapOnBackButton() {
   if(delegate == nullptr) { return; };
+  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
   delegate->clickBackButton();
 }
 void GameOverLayer::handleTapOnResetButton() {
   if(delegate == nullptr) { return; };
+  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
   delegate->clickResetButton();
 }
 

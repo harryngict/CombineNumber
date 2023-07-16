@@ -23,3 +23,8 @@ License
 MIT
 
 **Free Software**
+
+| Home screen | Guide screen | Game screen |
+| --- | --- | --- |
+| ![9 16-1](https://github.com/chihoangnguyen93/CombineNumber/assets/15699560/06d546ed-a2b3-4d5f-aa9b-7c3fb45288da) | ![9 16-2](https://github.com/chihoangnguyen93/CombineNumber/assets/15699560/f634d9cc-287e-417b-b6fe-ec3e89927713) |  ![9 16-3](https://github.com/chihoangnguyen93/CombineNumber/assets/15699560/4fcfc44f-7d1e-4926-bdf0-2ad560ed11d5) |
+

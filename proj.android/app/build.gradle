@@ -9,8 +9,8 @@ android {
         applicationId "com.boring.combinenumber"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 3
-        versionName "1.0"
+        versionCode 16
+        versionName "1.0.2"
 
         externalNativeBuild {
             if (PROP_BUILD_TYPE == 'ndk-build') {

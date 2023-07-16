@@ -9,23 +9,35 @@
 #include "GameConfig.h"
 #include "RandomNumber.h"
 #include "ColorFactory.h"
+#include "SoundManager.h"
 
 GameBoard::GameBoard(int rows, int columns) {
   this->rows = rows;
   this->columns = columns;
   this->size = Size(rows* WIDTH_HEIGHT_CELL, columns* WIDTH_HEIGHT_CELL);
-  this->resetGame();
+  this->resetGameBoard();
 }
 
-void GameBoard::resetGame() {
+void GameBoard::resetGameBoard() {
   isTouchAvailable = true;
+  stackUndoDatas = stack<UndoData>();
+  stackTouchNumbers = stack<NumberObject*>();
+  drawLines = vector<DrawLineObject*>();
   totalNumberNeedFillUp = rows * columns;
   earnPoint = 0;
   maximumNumber = 2;
-  cleanNumbers();
-  drawFirstGameBoard();
+  cleanAllNumberOnGameBoard();
+  drawFirstTimeOpenGameBoard([&, this]{
+    if(UserDefault::getInstance()->getBoolForKey(KEY_FRIST_TIME_OPEN_GAME, true)) {
+      this->showGuideLineLayer(FIRST_TIME_OPEN);
+    } else {
+      this->delegate->readyToShowAdvertisement();
+    }
+    this->checkGameOver();
+  });
 }
-void GameBoard::cleanNumbers() {
+
+void GameBoard::cleanAllNumberOnGameBoard() {
   for(int row = 0; row < rows; row++ ) {
     for(int column = 0; column < columns; column++) {
       if(numberObjects[row][column] != nullptr) {
@@ -64,6 +76,7 @@ Vec2 GameBoard::convertTouchToGameBoardPosition(Touch* mTouch) {
 
 bool GameBoard::handleTouchBegan(Touch* mTouch, Event* pEvent) {
   if(!isTouchAvailable) { return false; };
+  clearPreTouchNumberBeforeTouchBegan();
   Vec2 pos = convertTouchToGameBoardPosition(mTouch);
   if(!isTouchingInsideGameBoard(pos)) { return false; }
   Vec2 matrix = convertPositionToGameBoardMatrix(pos);
@@ -72,6 +85,7 @@ bool GameBoard::handleTouchBegan(Touch* mTouch, Event* pEvent) {
   highLightSameNumber(touchNumber);
   touchNumber->setAnimationStatus(TOUCH_ANIMATION);
   stackTouchNumbers.push(touchNumber);
+  SoundManager::getInstance()->playSound(TOUCH_NUMBER_SOUND);
   return true;
 }
 
@@ -84,7 +98,7 @@ void GameBoard::handleTouchMove(Touch* mTouch, Event* pEvent) {
   NumberObject* headStack = stackTouchNumbers.top();
   if(touchNumber == headStack) { return; }
   
-  if(existNumberOnStacks(touchNumber)) {
+  if(existNumberOnTouchStacks(touchNumber)) {
     stack<NumberObject*> tempStack = stackTouchNumbers;
     tempStack.pop();
     NumberObject* newHead = tempStack.top();
@@ -97,7 +111,8 @@ void GameBoard::handleTouchMove(Touch* mTouch, Event* pEvent) {
     if (abilityConnect(touchNumber, headStack)) {
       touchNumber->setAnimationStatus(TOUCH_ANIMATION);
       stackTouchNumbers.push(touchNumber);
-      addLineWhenMove(headStack->getMatrix(), touchNumber->getMatrix());
+      addLineWhenMove(headStack->getMatrix(), touchNumber->getMatrix(), touchNumber->getCircleColor());
+      SoundManager::getInstance()->playSound(TOUCH_NUMBER_SOUND);
     }
   }
 }
@@ -110,15 +125,68 @@ void GameBoard::handleTouchEnd(Touch* mTouch, Event* pEvent) {
   runAction(sequence);
 }
 
+void GameBoard::pushUndoDataToStackBeforeHandleConnect() {
+  std::vector<int> values;
+  for(int row = 0; row < TOTAL_ROW_CELL; row++) {
+    for(int column = 0; column < TOTAL_COLUMN_CELL; column++) {
+      if(numberObjects[row][column] != nullptr) {
+        int value = numberObjects[row][column]->getValue();
+        values.push_back(value);
+      }
+    }
+  }
+  stackUndoDatas.push(UndoData(values, earnPoint, maximumNumber));
+}
+
+void GameBoard::activateUndoGameBoard(function<void(bool)> completion) {
+  if(stackUndoDatas.empty()) {
+    completion(false);
+    return;
+  }
+  cleanAllNumberOnGameBoard();
+
+  auto undoData = stackUndoDatas.top();
+  stackUndoDatas.pop();
+  totalNumberNeedFillUp = rows * columns;
+  int preEarnPoint = undoData.getEarnPont();
+  int preMaximumNumber = undoData.getMaxNumber();
+  for(int row = 0; row < rows; row++ ) {
+    for(int column = 0; column < columns; column++) {
+      int number = undoData.getValues()[column + row * TOTAL_COLUMN_CELL];
+      drawNumber(number, row, column,
+                 ColorFactory::GetInstance()->getTextColor(),
+                 ColorFactory::GetInstance()->getCircleColor(number), [&, this, completion, preEarnPoint, preMaximumNumber]{
+        this->totalNumberNeedFillUp -= 1;
+        if(totalNumberNeedFillUp <= 0) {
+          completion(true);
+          this->earnPoint = preEarnPoint;
+          this->maximumNumber = preMaximumNumber;
+          this->delegate->fireEarnScoreAndMaximumNumber(earnPoint, maximumNumber);
+          return;
+        }
+      });
+    }
+  }
+}
+
 void GameBoard::handleTouchStackWhenTouchEnded() {
-  if(stackTouchNumbers.size() >= MIN_SAME_VALUE) {
-    handleConnectNumber([&, this]{
-      this->handleDropNumber();
-      this->fillUpGameBoard();
-      if(delegate != nullptr) {
-        this->delegate->fireEarnScore(earnPoint);
-        this->delegate->fireMaximumNumber(maximumNumber);
-      };
+  int countNumberDrop = int(stackTouchNumbers.size());
+  if(countNumberDrop >= MIN_SAME_VALUE) {
+
+    pushUndoDataToStackBeforeHandleConnect();
+    
+    handleConnectNumber([&, this, countNumberDrop]{
+    
+      this->handleDropNumber([&, this]{
+        
+        this->fillUpNewNumberForGameBoard([&, this]{
+          
+          this->delegate->fireEarnScoreAndMaximumNumber(earnPoint, maximumNumber);
+    
+          this->checkGameOver();
+          
+        });
+      });
     });
   } else {
     while (!stackTouchNumbers.empty()) {
@@ -152,6 +220,8 @@ void GameBoard::handleConnectNumber(function<void()> completion) {
                                                                                                                   ColorFactory::GetInstance()->getTextColor(),
                                                                                                                   ColorFactory::GetInstance()->getCircleColor(newValue),
                                                                                                                   completion);
+          SoundManager::getInstance()->playSound(INCREASE_NEW_NUMBER_SOUND);
+          return;
         }
       });
     }
@@ -160,7 +230,7 @@ void GameBoard::handleConnectNumber(function<void()> completion) {
   }
 }
 
-void GameBoard::handleDropNumber() {
+void GameBoard::handleDropNumber(function<void()> completion) {
   for(int i = 0; i < TOTAL_ROW_CELL; i++) {
     int numberOfEmptySpace = 0;
     for(int j = 0; j < TOTAL_COLUMN_CELL; j++) {
@@ -180,9 +250,23 @@ void GameBoard::handleDropNumber() {
       }
     }
   }
+  completion();
 }
 
-vector<int> GameBoard::getAllAvailableNumberOnGameBoard() {
+void GameBoard::clearPreTouchNumberBeforeTouchBegan() {
+  stackTouchNumbers = stack<NumberObject*>();
+  removeAllLines();
+  for(int row = 0; row < TOTAL_ROW_CELL; row++) {
+    for(int column = 0; column < TOTAL_COLUMN_CELL; column++) {
+      if(numberObjects[row][column] != nullptr) {
+        numberObjects[row][column]->setActiveNumber(true);
+        numberObjects[row][column]->setAnimationStatus(REVERT_ANIMATION_AFTER_TOUCH);
+      }
+    }
+  }
+}
+
+vector<int> GameBoard::getValueOfAllNumberOnGameBoard() {
   std::vector<int> numbers;
   for(int row = 0; row < TOTAL_ROW_CELL; row++) {
     for(int column = 0; column < TOTAL_COLUMN_CELL; column++) {
@@ -198,35 +282,38 @@ vector<int> GameBoard::getAllAvailableNumberOnGameBoard() {
   return numbers;
 }
 
-void GameBoard::fillUpGameBoard() {
-  vector<int> buckets = getAllAvailableNumberOnGameBoard();
+void GameBoard::fillUpNewNumberForGameBoard(function<void()> completion) {
+  vector<int> buckets = getValueOfAllNumberOnGameBoard();
   for(int row = 0; row < TOTAL_ROW_CELL; row++) {
     for(int column = 0; column < TOTAL_COLUMN_CELL; column++) {
       if(numberObjects[row][column] == nullptr) {
         int number = RandomNumber::GetInstance()->getRandomNumber(buckets);
-        drawNumber(number, row, column, ColorFactory::GetInstance()->getTextColor(), ColorFactory::GetInstance()->getCircleColor(number), [&, this]{
+        maximumNumber = max(maximumNumber, number);
+        drawNumber(number, row, column,
+                   ColorFactory::GetInstance()->getTextColor(),
+                   ColorFactory::GetInstance()->getCircleColor(number), [&, this, completion]{
           this->totalNumberNeedFillUp -= 1;
-          if(totalNumberNeedFillUp == 0) { this->checkGameOver(); }
+          if(totalNumberNeedFillUp <= 0) {
+            completion();
+            return;
+          }
         });
       }
     }
   }
 }
 
-void GameBoard::drawFirstGameBoard() {
+void GameBoard::drawFirstTimeOpenGameBoard(function<void()> completion) {
   for(int row = 0; row < rows; row++) {
     for(int column = 0; column < columns; column++) {
       int number = RandomNumber::GetInstance()->getRandomNumber(maximumNumber - 1);
       drawNumber(number, row, column,
                  ColorFactory::GetInstance()->getTextColor(),
-                 ColorFactory::GetInstance()->getCircleColor(number), [&, this]{
+                 ColorFactory::GetInstance()->getCircleColor(number), [&, this, completion]{
         this->totalNumberNeedFillUp -= 1;
-        if(totalNumberNeedFillUp == 0) {
-          if(UserDefault::getInstance()->getBoolForKey(KEY_FRIST_TIME_OPEN_GAME, true)) {
-            this->showGuideLineLayer(FIRST_TIME_OPEN);
-          } else {
-            if(this->delegate != nullptr) { this->delegate->readyToShowAdvertisement(); };
-          }
+        if(totalNumberNeedFillUp <= 0) {
+          completion();
+          return;
         }
       });
     }
@@ -237,13 +324,16 @@ void GameBoard::showGuideLineLayer(int status) {
   switch (status) {
     case CLICK_SUGGESTION: break;
     case FIRST_TIME_OPEN:
-      if(delegate != nullptr) { delegate->fireShowGuidePopUp(true); };
+      delegate->fireShowGuidePopUp(true);
       break;
     default: break;
   }
   isTouchAvailable = false;
   vector<Vec2> connectPoints = getAllAbilityConnectPoints();
-  if(connectPoints.size() < MIN_SAME_VALUE)  { return; }
+  if(connectPoints.size() < MIN_SAME_VALUE)  {
+    this->delegate->activeTouchTopBarMenuLayer();
+    return;
+  }
   auto sprite = Sprite::create(GUIDE_ICON_NAME);
   Vec2 position = convertMatrixToGameBoardPosition(connectPoints[0].x, connectPoints[0].y);
   sprite->setPosition(Vec2(position.x + WIDTH_HEIGHT_CELL/2.0, position.y));
@@ -251,17 +341,15 @@ void GameBoard::showGuideLineLayer(int status) {
   this->addChild(sprite);
   float duration = (max(int(connectPoints.size()/4), 1) * GUIDE_LINE_MOVE_TO_DURATION)/(connectPoints.size());
   moveGuideSpriteToPoints(sprite, connectPoints, duration, [&, sprite, status, this]{
-    if(this->delegate != nullptr) {
-      switch (status) {
-        case CLICK_SUGGESTION: break;
-        case FIRST_TIME_OPEN:
-          this->delegate->fireShowGuidePopUp(false);
-          this->delegate->readyToShowAdvertisement();
-          break;
-        default: break;
-      }
-      this->delegate->activeTouchTopBarMenuLayer();
-    };
+    switch (status) {
+      case CLICK_SUGGESTION: break;
+      case FIRST_TIME_OPEN:
+        this->delegate->fireShowGuidePopUp(false);
+        this->delegate->readyToShowAdvertisement();
+        break;
+      default: break;
+    }
+    this->delegate->activeTouchTopBarMenuLayer();
     this->removeAllLines();
     this->isTouchAvailable = true;
     this->removeChild(sprite);
@@ -275,7 +363,7 @@ void GameBoard::moveGuideSpriteToPoints(Sprite* sprite, const std::vector<Vec2>&
     Vec2 position = convertMatrixToGameBoardPosition(points[i].x, points[i].y);
     auto moveTo = MoveTo::create(duration, Vec2(position.x + WIDTH_HEIGHT_CELL/2.0, position.y));
     actions.pushBack(moveTo);
-    if(i + 1 < points.size()) { addLineWhenMove(points[i], points[i+1]); }
+    if(i + 1 < points.size()) { addLineWhenMove(points[i], points[i+1], ColorFactory::GetInstance()->getLineColor()); }
   }
   auto disappear = CallFunc::create([sprite]() { sprite->setVisible(false); });
   actions.pushBack(disappear);
@@ -347,7 +435,7 @@ void GameBoard::revertHighLightNumber() {
   }
 }
 
-bool GameBoard::existNumberOnStacks(NumberObject* number) {
+bool GameBoard::existNumberOnTouchStacks(NumberObject* number) {
   stack<NumberObject*> stacks = stackTouchNumbers;
   while (!stacks.empty()) {
     NumberObject* last = stacks.top();
@@ -360,7 +448,7 @@ bool GameBoard::existNumberOnStacks(NumberObject* number) {
   return false;
 }
 
-void GameBoard::addLineWhenMove(const Vec2& startMatrix, const Vec2& endMatrix) {
+void GameBoard::addLineWhenMove(const Vec2& startMatrix, const Vec2& endMatrix, Color4F color) {
   Vec2 originalStartPoint = convertMatrixToGameBoardPosition(startMatrix.x, startMatrix.y);
   Vec2 originalEndPoint = convertMatrixToGameBoardPosition(endMatrix.x, endMatrix.y);
   
@@ -370,7 +458,7 @@ void GameBoard::addLineWhenMove(const Vec2& startMatrix, const Vec2& endMatrix) 
   DrawNode* drawNode = cocos2d::DrawNode::create();
   drawNode->setLocalZOrder(LINE_TAG);
   addChild(drawNode);
-  drawNode->drawSegment(startPoint, endPoint, LINE_WIDTH, ColorFactory::GetInstance()->getLineColor());
+  drawNode->drawSegment(startPoint, endPoint, LINE_WIDTH, color);
   
   DrawLineObject* line = new DrawLineObject(drawNode, startMatrix, endMatrix);
   drawLines.push_back(line);
@@ -401,7 +489,8 @@ bool GameBoard::checkGameOver() {
   if(connectPoints.size() >= MIN_SAME_VALUE) {
     return false;
   } else {
-    if(delegate != nullptr) { delegate->fireGameOverEvent(); };
+    delegate->fireGameOverEvent();
+    SoundManager::getInstance()->playSound(GAME_OVER_SOUND);
     return true;
   }
 }
@@ -528,6 +617,36 @@ bool GameBoard::abilityConnect(NumberObject* lhs, NumberObject* rhs) {
     
   }
   return false;
+}
+
+bool GameBoard::handleTouchBeganWhenRemoveNumber(Touch* mTouch, Event* pEvent, function<void(bool)> completion) {
+  if(!isTouchAvailable) {
+    completion(false);
+    return false;
+  }
+  clearPreTouchNumberBeforeTouchBegan();
+  Vec2 pos = convertTouchToGameBoardPosition(mTouch);
+  if(!isTouchingInsideGameBoard(pos)) {
+    completion(false);
+    return false;
+  }
+  SoundManager::getInstance()->playSound(REMOVE_NUMBER_SOUND);
+  Vec2 matrix = convertPositionToGameBoardMatrix(pos);
+  removeNumberAt(matrix.x, matrix.y, [&, completion]{
+    completion(true);
+  });
+  return true;
+}
+
+void GameBoard::removeNumberAt(int row, int column, function<void()> completion) {
+  removeChild(numberObjects[row][column]);
+  numberObjects[row][column] = nullptr;
+  this->handleDropNumber([&, this]{
+    this->fillUpNewNumberForGameBoard([&, this, completion]{
+      this->checkGameOver();
+      completion();
+    });
+  });
 }
 
 void GameBoard::printConnectPoints(const std::vector<Vec2>& points) {

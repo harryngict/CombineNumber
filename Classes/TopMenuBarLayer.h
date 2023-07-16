@@ -20,18 +20,17 @@ using namespace cocos2d::ui;
 
 class TopMenuBarLayer: public Layer {
 private:
-  int currentPoint, currentMaximumNumber, currentSuggestionCount;
+  int currentPoint, currentMaximumNumber;
   Size layerSize;
   EventClickButtonDelegate* delegate  = nullptr;
   Label* scoreLabel;
   Label* maximumNumberLabel;
-  CustomButton* backButton;
-  CustomButton* resetButton;
-  CustomButton* suggestionButton;
+  CustomButton* backButton, *resetButton, *soundButton;
   Sequence* createLabelAnimation();
   void handleTapOnBackButton();
   void handleTapOnResetButton();
   void handleTapOnSuggestionButton();
+  void handleTapOnSoundButton();
 public:
   TopMenuBarLayer();
   virtual ~TopMenuBarLayer();

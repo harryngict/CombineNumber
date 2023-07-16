@@ -10,6 +10,7 @@
 #include "GameConfig.h"
 #include "GameScene.h"
 #include "CustomButton.h"
+#include "SoundManager.h"
 
 HomeScene::HomeScene() {}
 
@@ -29,12 +30,15 @@ bool HomeScene::init() {
   auto backgroundColor = cocos2d::LayerColor::create(ColorFactory::GetInstance()->getBackgroundColor());
   addChild(backgroundColor);
   
-  CustomButton* playButton = CustomButton::create(PLAY_BUTTON_NAME, "", []{ Director::getInstance()->replaceScene(GameScene::createScene()); });
+  CustomButton* playButton = CustomButton::create(PLAY_BUTTON_NAME, "", []{
+    SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+    Director::getInstance()->replaceScene(GameScene::createScene());
+  });
   
   playButton->setPosition(Vec2(winSize.width/2.0, winSize.height/2.0 + 64.0));
   addChild(playButton);
   
-  Label* tileGameLabel = Label::createWithTTF(TITLE_GAME, FONT_NAME_NUMBER_LABEL, FONT_SIZE_TILE_GAME_LABEL);
+  Label* tileGameLabel = Label::createWithTTF(TITLE_GAME, FONT_LABEL_NAME, FONT_SIZE_TILE_GAME_LABEL);
   tileGameLabel->setPosition(Vec2(playButton->getPositionX(), playButton->getPositionY() + 120.0));
   tileGameLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
   tileGameLabel->setColor(ColorFactory::GetInstance()->getTextColor());
@@ -47,7 +51,7 @@ bool HomeScene::init() {
   
   int currentMaxEarnPoint = UserDefault::getInstance()->getIntegerForKey(KEY_HIGHEST_EARN_POINT, 0);
   Label* highestEarnPointLabel = Label::createWithTTF(to_string(currentMaxEarnPoint),
-                                                      FONT_NAME_NUMBER_LABEL,
+                                                      FONT_LABEL_NAME,
                                                       FONT_SIZE_EARN_MAXIMUM_LABEL_IN_HOME_SCENE);
   highestEarnPointLabel->setPosition(Vec2(pointIcon->getPositionX(), pointIcon->getPositionY() - 80.0));
   highestEarnPointLabel->setColor(ColorFactory::GetInstance()->getTextColor());
@@ -60,7 +64,7 @@ bool HomeScene::init() {
   
   int currentHighestNumber = UserDefault::getInstance()->getIntegerForKey(KEY_HIGHEST_NUMBER, 0);
   Label* highestNumberLabel = Label::createWithTTF(to_string(currentHighestNumber),
-                                                   FONT_NAME_NUMBER_LABEL,
+                                                   FONT_LABEL_NAME,
                                                    FONT_SIZE_EARN_MAXIMUM_LABEL_IN_HOME_SCENE);
   highestNumberLabel->setPosition(Vec2(numberIcon->getPositionX(), numberIcon->getPositionY() - 80.0));
   highestNumberLabel->setColor(ColorFactory::GetInstance()->getTextColor());

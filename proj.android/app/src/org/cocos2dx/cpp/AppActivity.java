@@ -55,6 +55,8 @@ public class AppActivity extends Cocos2dxActivity {
 
     public static void showInterstitial() { adManager.showInterstitial(); }
 
+    public  static  boolean isBannerViewVisible() { return adManager.isBannerViewVisible(); }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

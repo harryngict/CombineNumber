@@ -1,8 +1,6 @@
 #include "AppDelegate.h"
 #include "AndroidLaunchingScene.h"
 #include "HomeScene.h"
-#include "AdmobManager.h"
-#include "GameConfig.h"
 USING_NS_CC;
 
 static cocos2d::Size designResolutionSize = cocos2d::Size(640, 1136);
@@ -40,6 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
   }
   FileUtils::getInstance()->addSearchPath("images/");
   FileUtils::getInstance()->addSearchPath("fonts/");
+  FileUtils::getInstance()->addSearchPath("soundeffects/");
   
   // turn on display FPS
   director->setDisplayStats(false);

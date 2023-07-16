@@ -33,10 +33,9 @@ public:
     if (!Button::init(normalImage, selectedImage, "", cocos2d::ui::Widget::TextureResType::LOCAL)) {
       return false;
     }
-    
-    labelNode = cocos2d::Label::createWithTTF(std::to_string(number), FONT_NAME_NUMBER_LABEL, 40);
+    labelNode = cocos2d::Label::createWithTTF(std::to_string(number), FONT_LABEL_NAME, FONT_SIZE_NUMBER_LABEL);
     labelNode->setAnchorPoint(cocos2d::Vec2::ANCHOR_MIDDLE);
-    labelNode->setPosition(cocos2d::Vec2(getContentSize().width, getContentSize().height));
+    labelNode->setPosition(cocos2d::Vec2(getContentSize().width, getContentSize().height + 4.0));
     addChild(labelNode);
     
     addAnimationWhenTapOnButton(completion);

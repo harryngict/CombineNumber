@@ -11,12 +11,16 @@
 NumberObject::NumberObject(int value, const Vec2& matrix, Color3B textColor, Color4F circleColor) {
   this->value = value;
   this->matrix = matrix;
+  this->circleColor = circleColor;
   
+  shadowNode = DrawNode::create();
+  addChild(shadowNode);
   circleNode = DrawNode::create();
-  this->addChild(circleNode);
-  drawCircleColor(circleColor);
+  addChild(circleNode);
+
+  drawCircleColorWithShadow(circleColor);
   
-  numberLabel = Label::createWithTTF(to_string(value), FONT_NAME_NUMBER_LABEL, FONT_SIZE_NUMBER_LABEL);
+  numberLabel = Label::createWithTTF(to_string(value), FONT_LABEL_NAME, FONT_SIZE_NUMBER_LABEL);
   numberLabel->setPosition(Vec2(WIDTH_HEIGHT_CELL/2.0, WIDTH_HEIGHT_CELL/2.0));
   numberLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
   numberLabel->setColor(textColor);
@@ -36,16 +40,23 @@ void NumberObject::setPosition(const Vec2& pos) {
 NumberObject::~NumberObject() {
   unscheduleUpdate();
   circleNode = nullptr;
+  shadowNode = nullptr;
   numberLabel = nullptr;
 }
 
-void NumberObject::drawCircleColor(Color4F color) {
+void NumberObject::drawCircleColorWithShadow(Color4F color) {
   Vec2 center = Vec2(WIDTH_HEIGHT_CELL/2.0, WIDTH_HEIGHT_CELL/2.0);
   float radius =  (WIDTH_HEIGHT_CELL/2.0 - CIRCLE_RADIUS);
-  circleNode->drawSolidCircle(center, radius, 0.0f, 100.0, color);
+  float numSegments = 100.0;
+  circleNode->drawSolidCircle(center, radius, 0.0f, numSegments, color);
+  
+  Color4F shadowColor(0.0f, 0.0f, 0.0f, 0.16f);
+  Vec2 shadowCenter = Vec2((WIDTH_HEIGHT_CELL - 18.0)/2.0, (WIDTH_HEIGHT_CELL - 8.0)/2.0);
+  shadowNode->drawSolidCircle(shadowCenter, radius, 0.0f, numSegments, shadowColor);
 }
 
 void NumberObject::setActiveNumber(bool isActive) {
+  shadowNode->setVisible(isActive);
   circleNode->setOpacity(isActive ? 255 : NUMBER_DISABLE_OPACITY);
   numberLabel->setOpacity(isActive ? 255 : NUMBER_DISABLE_OPACITY);
 }
@@ -62,26 +73,24 @@ void NumberObject::setTraveled(bool isTraveled) {
   this->isTraveled = isTraveled;
 }
 
-void NumberObject::runIncreaseNumberAnimation(int newValue, Color3B textColor, Color4F circleColor, function<void()> completion) {
-  value = newValue;
-  runLabelAnimation(value, textColor, circleColor, completion);
-}
-
-void NumberObject::runLabelAnimation(int value, Color3B color, Color4F circleColor, function<void()> completion) {
+void NumberObject::runIncreaseNumberAnimation(int newValue, Color3B newTextColor, Color4F newCircleColor, function<void()> completion) {
   auto scaleUp = ScaleTo::create(TIME_RUN_ANIMATION, 3.0f);
   auto scaleDown = ScaleTo::create(TIME_RUN_ANIMATION, 1.0f);
-  auto updateText = CallFunc::create([&, this, value, color, circleColor, completion]() {
+  auto updateText = CallFunc::create([&, this, newValue, newTextColor, newCircleColor, completion]() {
+    circleColor = newCircleColor;
+    value = newValue;
     numberLabel->setString(to_string(value));
-    numberLabel->setColor(color);
+    numberLabel->setColor(newTextColor);
+    shadowNode->clear();
     circleNode->clear();
-    drawCircleColor(circleColor);
+    drawCircleColorWithShadow(newCircleColor);
   });
   
   auto delay = DelayTime::create(DELAY_DROP_NUMBER);
   
   auto completionCallFunc = CallFunc::create([&, this,completion]() {
-    completion();
     animationStatus = REVERT_ANIMATION_AFTER_TOUCH;
+    completion();
   });
   
   auto sequence = Sequence::create(scaleUp, updateText, scaleDown, delay, completionCallFunc, nullptr);

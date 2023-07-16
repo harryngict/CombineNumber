@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 
 import com.boring.combinenumber.R;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
@@ -14,10 +15,9 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
-public class AndroidAdManager {
+public class AndroidAdManager extends AdListener {
     private Activity activity;
-    private static AdView bottom_bannerView;
-    private static boolean bottom_bannerViewShowing = false;
+    private static AdView bottom_bannerView = null;
     private String bottom_bannerId;
     private String interstitialId;
 
@@ -37,7 +37,15 @@ public class AndroidAdManager {
     }
 
     public void hideBanner() {
-        hideBanner(bottom_bannerView);
+        hideAdView(bottom_bannerView);
+    }
+
+    public boolean isBannerViewVisible() {
+        if(bottom_bannerView == null) {
+            return false;
+        } else {
+            return bottom_bannerView.getVisibility() == View.VISIBLE;
+        }
     }
 
     public void showInterstitial() {
@@ -64,25 +72,24 @@ public class AndroidAdManager {
 
     private void setupBottomAdView() {
         bottom_bannerView = new AdView(activity);
-        bottom_bannerView.setAdSize(AdSize.BANNER);
+        bottom_bannerView.setAdSize(AdSize.FULL_BANNER);
+        bottom_bannerView.setAdListener(this);
         bottom_bannerView.setAdUnitId(bottom_bannerId);
         FrameLayout.LayoutParams bottom_adParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, android.view.Gravity.BOTTOM|android.view.Gravity.CENTER_HORIZONTAL);
         bottom_bannerView.setBackgroundColor(Color.BLACK);
         bottom_bannerView.setBackgroundColor(0);
+        bottom_bannerView.setEnabled(false);
+        bottom_bannerView.setVisibility(View.INVISIBLE);
         activity.addContentView(bottom_bannerView, bottom_adParams);
     }
 
-    public void hideBanner(AdView adView) {
+    public void hideAdView(AdView adView) {
         if (adView != null) {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (adView.isEnabled()) {
-                        adView.setEnabled(false);
-                    }
-                    if (adView.getVisibility() != View.INVISIBLE) {
-                        adView.setVisibility(View.INVISIBLE);
-                    }
+                    adView.setEnabled(false);
+                    adView.setVisibility(View.INVISIBLE);
                 }
             });
         }
@@ -93,18 +100,19 @@ public class AndroidAdManager {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (!bottom_bannerViewShowing) {
-                        bottom_bannerView.loadAd(new AdRequest.Builder().build());
-                        bottom_bannerViewShowing = true;
-                    }
-                    if (!bottom_bannerView.isEnabled()) {
-                        bottom_bannerView.setEnabled(true);
-                    }
-                    if (bottom_bannerView.getVisibility() == View.INVISIBLE) {
-                        bottom_bannerView.setVisibility(View.VISIBLE);
-                    }
+                    bottom_bannerView.loadAd(new AdRequest.Builder().build());
                 }
             });
         }
+    }
+
+    public void onAdFailedToLoad(@NonNull LoadAdError var1) {
+        bottom_bannerView.setEnabled(false);
+        bottom_bannerView.setVisibility(View.INVISIBLE);
+    }
+
+    public void onAdLoaded() {
+        bottom_bannerView.setEnabled(true);
+        bottom_bannerView.setVisibility(View.VISIBLE);
     }
 }
