@@ -159,9 +159,9 @@ void NumberObject::runTouchAndDisappearAnimation(function<void()> completion) {
     completion();
   });
   auto sequence = Sequence::create(touchAnimation,
-                                   DelayTime::create(0.3),
+                                   DelayTime::create(0.25),
                                    hideCallFun,
-                                   DelayTime::create(0.3),
+                                   DelayTime::create(0.25),
                                    completionCallFun,
                                    nullptr);
   this->runAction(sequence);

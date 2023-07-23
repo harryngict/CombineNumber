@@ -57,12 +57,13 @@ private:
   vector<Vec2> getAllAbilityConnectPoints();
   vector<Vec2> getAbilityConnectPointsAt(int row, int column);
   vector<Vec2> dfsCheckAbilityConnect(int row, int column, vector<Vec2>& connectPoints);
-  void moveGuideSpriteToPoints(Sprite* sprite, const std::vector<Vec2>& points, float duration, function<void()> completion);
+  void moveGuideSpriteToPoints(Sprite* sprite, const std::vector<Vec2>& points, function<void()> completion);
   void printConnectPoints(const std::vector<Vec2>& points);
   vector<int> getValueOfAllNumberOnGameBoard();
-  void pushUndoDataToStackBeforeHandleConnect();
+  void pushUndoDataBeforeGameBoardChanged();
   void clearPreTouchNumberBeforeTouchBegan();
-  void removeNumberAt(int row, int column, function<void()> completion);
+  void removeOneNumberAt(int row, int column, function<void()> completion);
+  void dropAndFillUpNumber(function<void()> completion);
 public:
   GameBoard(int rows, int columns);
   virtual ~GameBoard();

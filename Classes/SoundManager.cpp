@@ -9,6 +9,13 @@
 #include "GameConfig.h"
 #include "SimpleAudioEngine.h"
 #include "AudioEngine.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "CallNativeIOSWrapper.h"
+#endif
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include <jni.h>
+#include "platform/android/jni/JniHelper.h"
+#endif
 
 SoundManager* SoundManager::singleton_= nullptr;;
 
@@ -18,8 +25,7 @@ SoundManager *SoundManager::getInstance() {
 }
 
 void SoundManager::playSound(int tag) {
-  bool isSoundOn = UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, false);
-  if(!isSoundOn) { return; }
+  if(!UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, true)) { return; }
   std::string filePath = "";
   switch (tag) {
     case CLICK_BUTTON_SOUND:
@@ -43,4 +49,17 @@ void SoundManager::playSound(int tag) {
   auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
   audio->preloadEffect(filePath.c_str());
   audio->playEffect(filePath.c_str());
+}
+
+void SoundManager::playHaptic() {
+  if(!UserDefault::getInstance()->getBoolForKey(KEY_HAPTIC_GAME, true)) { return; }
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+  CallNativeIOSWrapper::getInstance()->playHaptic();
+#endif
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+  cocos2d::JniMethodInfo methodInfo;
+  if (cocos2d::JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/cpp/AppActivity", "playHapticFeedback", "()V")) {
+    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+  }
+#endif
 }

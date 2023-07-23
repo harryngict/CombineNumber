@@ -7,6 +7,8 @@
 
 #import "CallNativeIOSWrapper.h"
 #import "AdmobIOS.h"
+#import "NativeSystemSound.h"
+
 
 static CallNativeIOSWrapper _sCallNativeIOSWrapper;
 
@@ -33,4 +35,8 @@ void CallNativeIOSWrapper::showInterstitial(std::function<void(bool)> completion
 
 bool CallNativeIOSWrapper::isBannerViewVisible() {
   return [[AdmobIOS sharedAdmob] isBannerViewVisible];
+}
+
+void CallNativeIOSWrapper::playHaptic() {
+  [[NativeSystemSound sharedInstance] playHaptic];
 }

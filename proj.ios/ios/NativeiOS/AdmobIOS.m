@@ -38,7 +38,6 @@ typedef enum : NSUInteger {
   [self showBottomBannerView];
 }
 
-
 - (void)showBottomBannerView{
   if (self.bottomBannerView == nil) {
     GADAdSize size =  GADAdSizeFullWidthPortraitWithHeight(64);

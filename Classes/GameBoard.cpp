@@ -86,6 +86,7 @@ bool GameBoard::handleTouchBegan(Touch* mTouch, Event* pEvent) {
   touchNumber->setAnimationStatus(TOUCH_ANIMATION);
   stackTouchNumbers.push(touchNumber);
   SoundManager::getInstance()->playSound(TOUCH_NUMBER_SOUND);
+  SoundManager::getInstance()->playHaptic();
   return true;
 }
 
@@ -113,6 +114,7 @@ void GameBoard::handleTouchMove(Touch* mTouch, Event* pEvent) {
       stackTouchNumbers.push(touchNumber);
       addLineWhenMove(headStack->getMatrix(), touchNumber->getMatrix(), touchNumber->getCircleColor());
       SoundManager::getInstance()->playSound(TOUCH_NUMBER_SOUND);
+      SoundManager::getInstance()->playHaptic();
     }
   }
 }
@@ -125,7 +127,7 @@ void GameBoard::handleTouchEnd(Touch* mTouch, Event* pEvent) {
   runAction(sequence);
 }
 
-void GameBoard::pushUndoDataToStackBeforeHandleConnect() {
+void GameBoard::pushUndoDataBeforeGameBoardChanged() {
   std::vector<int> values;
   for(int row = 0; row < TOTAL_ROW_CELL; row++) {
     for(int column = 0; column < TOTAL_COLUMN_CELL; column++) {
@@ -173,19 +175,11 @@ void GameBoard::handleTouchStackWhenTouchEnded() {
   int countNumberDrop = int(stackTouchNumbers.size());
   if(countNumberDrop >= MIN_SAME_VALUE) {
 
-    pushUndoDataToStackBeforeHandleConnect();
+    pushUndoDataBeforeGameBoardChanged();
     
     handleConnectNumber([&, this, countNumberDrop]{
-    
-      this->handleDropNumber([&, this]{
-        
-        this->fillUpNewNumberForGameBoard([&, this]{
-          
-          this->delegate->fireEarnScoreAndMaximumNumber(earnPoint, maximumNumber);
-    
-          this->checkGameOver();
-          
-        });
+      this->dropAndFillUpNumber([&, this] {
+        this->delegate->fireEarnScoreAndMaximumNumber(earnPoint, maximumNumber);
       });
     });
   } else {
@@ -339,8 +333,7 @@ void GameBoard::showGuideLineLayer(int status) {
   sprite->setPosition(Vec2(position.x + WIDTH_HEIGHT_CELL/2.0, position.y));
   sprite->setLocalZOrder(GUIDE_ICON_TAG);
   this->addChild(sprite);
-  float duration = (max(int(connectPoints.size()/4), 1) * GUIDE_LINE_MOVE_TO_DURATION)/(connectPoints.size());
-  moveGuideSpriteToPoints(sprite, connectPoints, duration, [&, sprite, status, this]{
+  moveGuideSpriteToPoints(sprite, connectPoints, [&, sprite, status, this]{
     switch (status) {
       case CLICK_SUGGESTION: break;
       case FIRST_TIME_OPEN:
@@ -357,13 +350,15 @@ void GameBoard::showGuideLineLayer(int status) {
   });
 }
 
-void GameBoard::moveGuideSpriteToPoints(Sprite* sprite, const std::vector<Vec2>& points, float duration, function<void()> completion) {
+void GameBoard::moveGuideSpriteToPoints(Sprite* sprite, const std::vector<Vec2>& points, function<void()> completion) {
+  int maximumGuideNumber = std::min(MAX_GUIDE_NUMBER_SHOW_ON_SCREEN, int(points.size()));
+  float duration = GUIDE_LINE_MOVE_TO_DURATION / maximumGuideNumber;
   Vector<FiniteTimeAction*> actions;
-  for(int i = 0; i < points.size(); i++) {
+  for(int i = 0; i < maximumGuideNumber; i++) {
     Vec2 position = convertMatrixToGameBoardPosition(points[i].x, points[i].y);
     auto moveTo = MoveTo::create(duration, Vec2(position.x + WIDTH_HEIGHT_CELL/2.0, position.y));
     actions.pushBack(moveTo);
-    if(i + 1 < points.size()) { addLineWhenMove(points[i], points[i+1], ColorFactory::GetInstance()->getLineColor()); }
+    if(i + 1 < maximumGuideNumber) { addLineWhenMove(points[i], points[i+1], ColorFactory::GetInstance()->getLineColor()); }
   }
   auto disappear = CallFunc::create([sprite]() { sprite->setVisible(false); });
   actions.pushBack(disappear);
@@ -631,26 +626,33 @@ bool GameBoard::handleTouchBeganWhenRemoveNumber(Touch* mTouch, Event* pEvent, f
     return false;
   }
   SoundManager::getInstance()->playSound(REMOVE_NUMBER_SOUND);
+  SoundManager::getInstance()->playHaptic();
   Vec2 matrix = convertPositionToGameBoardMatrix(pos);
-  removeNumberAt(matrix.x, matrix.y, [&, completion]{
+  removeOneNumberAt(matrix.x, matrix.y, [&, completion] {
     completion(true);
   });
   return true;
 }
 
-void GameBoard::removeNumberAt(int row, int column, function<void()> completion) {
+void GameBoard::removeOneNumberAt(int row, int column, function<void()> completion) {
   if(numberObjects[row][column] == nullptr) {
     completion();
     return;
   }
+  pushUndoDataBeforeGameBoardChanged();
   numberObjects[row][column]->runTouchAndDisappearAnimation([&, this, row, column, completion]{
     this->removeChild(numberObjects[row][column]);
     this->numberObjects[row][column] = nullptr;
-    this->handleDropNumber([&, this, completion]{
-      this->fillUpNewNumberForGameBoard([&, this, completion]{
-        this->checkGameOver();
-        completion();
-      });
+    this->dropAndFillUpNumber(completion);
+  });
+}
+
+void GameBoard::dropAndFillUpNumber(function<void()> completion) {
+  this->handleDropNumber([&, this, completion]{
+    this->fillUpNewNumberForGameBoard([&, this, completion]{
+      this->checkGameOver();
+      completion();
+      return;
     });
   });
 }

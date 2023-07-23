@@ -32,6 +32,7 @@ bool HomeScene::init() {
   
   CustomButton* playButton = CustomButton::create(PLAY_BUTTON_NAME, "", []{
     SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+    SoundManager::getInstance()->playHaptic();
     Director::getInstance()->replaceScene(GameScene::createScene());
   });
   

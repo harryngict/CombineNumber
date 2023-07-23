@@ -231,7 +231,7 @@ void GameScene::updateMessageLabel(const string& message, bool isHiddenAfterAnim
   messageLabel->setVisible(true);
   messageLabel->setString(message);
     messageLabel->stopAllActions();
-  auto scaleUp = ScaleTo::create(TIME_RUN_MESSAGE_LABEL_ANIMATION, 2.0f);
+  auto scaleUp = ScaleTo::create(TIME_RUN_MESSAGE_LABEL_ANIMATION, 1.26f);
   auto scaleDown = ScaleTo::create(TIME_RUN_MESSAGE_LABEL_ANIMATION, 1.0f);
   if(isHiddenAfterAnimation) {
     auto delay = DelayTime::create(DELAY_WARNING_LABEL_DISAPPEAR);

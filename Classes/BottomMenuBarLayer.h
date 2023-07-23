@@ -23,11 +23,13 @@ class BottomMenuBarLayer: public Layer {
 private:
   int undoCount, suggestCount, removeNumberCount;
   Size layerSize;
-  CustomButton* suggestionButton, *undoButton, *removeNumberButton;
+  CustomButton* suggestionButton, *undoButton, *removeNumberButton, *soundButton, *hapticButton;
   EventClickButtonDelegate* delegate  = nullptr;
   void handleTapOnUndoButton();
   void handleTapOnSuggestionButton();
   void handleTapOnRemoveNumberButton();
+  void handleTapOnSoundButton();
+  void handleTapOnHapticButton();
 public:
   BottomMenuBarLayer();
   virtual ~BottomMenuBarLayer();

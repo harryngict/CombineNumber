@@ -25,12 +25,11 @@ private:
   EventClickButtonDelegate* delegate  = nullptr;
   Label* scoreLabel;
   Label* maximumNumberLabel;
-  CustomButton* backButton, *resetButton, *soundButton;
+  CustomButton* backButton, *resetButton;
   Sequence* createLabelAnimation();
   void handleTapOnBackButton();
   void handleTapOnResetButton();
   void handleTapOnSuggestionButton();
-  void handleTapOnSoundButton();
 public:
   TopMenuBarLayer();
   virtual ~TopMenuBarLayer();

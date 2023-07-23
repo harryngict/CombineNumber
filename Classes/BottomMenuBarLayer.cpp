@@ -33,10 +33,23 @@ void BottomMenuBarLayer::buildUI(float height, Color4B layerColor) {
   removeNumberButton = CustomButton::create(REMOVE_NUMBER_ICON_NAME, "", removeNumberCount, [&, this]{ handleTapOnRemoveNumberButton(); });
   removeNumberButton->setPosition(Vec2(undoButton->getPositionX() - 96, suggestionButton->getPositionY()));
   addChild(removeNumberButton);
+  
+  bool isSoundOn = UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, true);
+  soundButton = CustomButton::create(isSoundOn ? SOUND_BUTTON_ON_NAME : SOUND_BUTTON_OFF_NAME,
+                                     "", [&, this] { handleTapOnSoundButton(); });
+  soundButton->setPosition(Vec2(48.0, suggestionButton->getPositionY()));
+  addChild(soundButton);
+  
+  bool isHapticOn = UserDefault::getInstance()->getBoolForKey(KEY_HAPTIC_GAME, true);
+  hapticButton = CustomButton::create(isHapticOn ? HAPTIC_BUTTON_ON_NAME : HAPTIC_BUTTON_OFF_NAME,
+                                      "", [&, this] { handleTapOnHapticButton(); });
+  hapticButton->setPosition(Vec2(soundButton->getPositionX() + 96, suggestionButton->getPositionY()));
+  addChild(hapticButton);
 }
 
 void BottomMenuBarLayer::handleTapOnSuggestionButton() {
   SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
   if(suggestCount <= 0) {
     return;
   };
@@ -48,6 +61,7 @@ void BottomMenuBarLayer::handleTapOnSuggestionButton() {
 
 void BottomMenuBarLayer::handleTapOnUndoButton() {
   SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
   if(undoCount <= 0) {
     return;
   };
@@ -62,6 +76,7 @@ void BottomMenuBarLayer::handleTapOnUndoButton() {
 
 void BottomMenuBarLayer::handleTapOnRemoveNumberButton() {
   SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
   if(removeNumberCount <= 0) {
     return;
   };
@@ -98,4 +113,30 @@ void BottomMenuBarLayer::setTouchEnabledOnLayer(bool isEnabled) {
   suggestionButton->setTouchEnabled(isEnabled);
   undoButton->setTouchEnabled(isEnabled);
   removeNumberButton->setTouchEnabled(isEnabled);
+  soundButton->setTouchEnabled(isEnabled);
+  hapticButton->setTouchEnabled(isEnabled);
+}
+
+void BottomMenuBarLayer::handleTapOnSoundButton() {
+  if(UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, true)) {
+    UserDefault::getInstance()->setBoolForKey(KEY_SOUND_GAME, false);
+    soundButton->loadTextureNormal(SOUND_BUTTON_OFF_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
+  } else {
+    UserDefault::getInstance()->setBoolForKey(KEY_SOUND_GAME, true);
+    soundButton->loadTextureNormal(SOUND_BUTTON_ON_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
+  }
+  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
+}
+
+void BottomMenuBarLayer::handleTapOnHapticButton() {
+  if(UserDefault::getInstance()->getBoolForKey(KEY_HAPTIC_GAME, true)) {
+    UserDefault::getInstance()->setBoolForKey(KEY_HAPTIC_GAME, false);
+    hapticButton->loadTextureNormal(HAPTIC_BUTTON_OFF_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
+  } else {
+    UserDefault::getInstance()->setBoolForKey(KEY_HAPTIC_GAME, true);
+    hapticButton->loadTextureNormal(HAPTIC_BUTTON_ON_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
+  }
+  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
 }

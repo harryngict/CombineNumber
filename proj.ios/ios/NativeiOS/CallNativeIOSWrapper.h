@@ -17,6 +17,7 @@ public:
   void showBanner();
   void showInterstitial(std::function<void(bool)> completion);
   bool isBannerViewVisible();
+  void playHaptic();
 };
 
 #endif /* CallNativeIOSWrapper_h */

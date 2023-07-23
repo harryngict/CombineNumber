@@ -21,6 +21,7 @@ protected:
 public:
   static SoundManager* getInstance();
   void playSound(int tag);
+  void playHaptic();
 };
 
 #endif /* SoundManager_h */

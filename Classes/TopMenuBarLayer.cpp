@@ -33,14 +33,8 @@ void TopMenuBarLayer::buildUI(float height,
   addChild(backButton);
   
   resetButton = CustomButton::create(RESET_BUTTON_NAME, "", [&, this] { handleTapOnResetButton(); });
-  resetButton->setPosition(Vec2(backButton->getPositionX() - 68.0, backButton->getPositionY()));
+  resetButton->setPosition(Vec2(backButton->getPositionX() - 80.0, backButton->getPositionY()));
   addChild(resetButton);
-  
-  bool isSoundOn = UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, false);
-  std::string normalImage = isSoundOn ? SOUND_BUTTON_ON_NAME : SOUND_BUTTON_OFF_NAME;
-  soundButton = CustomButton::create(normalImage, "", [&, this] { handleTapOnSoundButton(); });
-  soundButton->setPosition(Vec2(resetButton->getPositionX() - 72.0, backButton->getPositionY()));
-  addChild(soundButton);
   
   Sprite* maximumNumberIcon = Sprite::create(MAXIMUM_NUMBER_ICON_NAME);
   maximumNumberIcon->setPosition(48.0, resetButton->getPositionY());
@@ -73,12 +67,14 @@ void TopMenuBarLayer::setDelegate(EventClickButtonDelegate* delegate) {
 void TopMenuBarLayer::handleTapOnBackButton() {
   if(delegate == nullptr) { return; };
   SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
   delegate->clickBackButton();
 }
 
 void TopMenuBarLayer::handleTapOnResetButton() {
   if(delegate == nullptr) { return; };
   SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
   delegate->clickResetButton();
 }
 
@@ -99,7 +95,6 @@ void TopMenuBarLayer::updateMaximumNumber(int number) {
 void TopMenuBarLayer::setTouchEnabledOnLayer(bool isEnabled) {
   backButton->setTouchEnabled(isEnabled);
   resetButton->setTouchEnabled(isEnabled);
-  soundButton->setTouchEnabled(isEnabled);
 }
 
 Sequence* TopMenuBarLayer::createLabelAnimation() {
@@ -115,16 +110,4 @@ void TopMenuBarLayer::resetData() {
 
   scoreLabel->setString(to_string(currentPoint));
   maximumNumberLabel->setString(to_string(currentMaximumNumber));
-}
-
-void TopMenuBarLayer::handleTapOnSoundButton() {
-  bool isSoundOn = UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, false);
-  if(isSoundOn) {
-    UserDefault::getInstance()->setBoolForKey(KEY_SOUND_GAME, false);
-    soundButton->loadTextureNormal(SOUND_BUTTON_OFF_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
-  } else {
-    UserDefault::getInstance()->setBoolForKey(KEY_SOUND_GAME, true);
-    soundButton->loadTextureNormal(SOUND_BUTTON_ON_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
-  }
-  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
 }

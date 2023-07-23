@@ -28,6 +28,7 @@ import android.os.Bundle;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import android.os.Build;
 import android.view.WindowManager;
+import android.os.Vibrator;
 
 public class AppActivity extends Cocos2dxActivity {
 
@@ -56,6 +57,13 @@ public class AppActivity extends Cocos2dxActivity {
     public static void showInterstitial() { adManager.showInterstitial(); }
 
     public  static  boolean isBannerViewVisible() { return adManager.isBannerViewVisible(); }
+
+    public static void playHapticFeedback() {
+        Vibrator vibrator = (Vibrator) AppActivity.getContext().getSystemService(AppActivity.VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            vibrator.vibrate(50); // Vibrate for 50 milliseconds (adjust as needed)
+        }
+    }
 
     @Override
     public void onDestroy() {

@@ -42,11 +42,13 @@ void GameOverLayer::buildUI(float height, Color4B layerColor) {
 void GameOverLayer::handleTapOnBackButton() {
   if(delegate == nullptr) { return; };
   SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
   delegate->clickBackButton();
 }
 void GameOverLayer::handleTapOnResetButton() {
   if(delegate == nullptr) { return; };
   SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  SoundManager::getInstance()->playHaptic();
   delegate->clickResetButton();
 }
 

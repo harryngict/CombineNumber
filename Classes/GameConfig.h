@@ -19,6 +19,7 @@
 #define DROP_DOWN_ANIMATION_SPEED 1800.0 // pixels per second
 #define TOUCH_ANIMATION_SPEED 40.0 // pixels per second
 #define TOUCH_ANIMATION_DELTA 4.0
+#define MAX_GUIDE_NUMBER_SHOW_ON_SCREEN 5
 
 #define FONT_LABEL_NAME "ManilaSansBld.otf"
 #define FONT_SIZE_TILE_GAME_LABEL 54
@@ -52,6 +53,8 @@
 #define RESET_BUTTON_NAME "reset_button.png"
 #define SOUND_BUTTON_ON_NAME "sound-on-icon.png"
 #define SOUND_BUTTON_OFF_NAME "sound-off-icon.png"
+#define HAPTIC_BUTTON_ON_NAME "phone-vibration-on.png"
+#define HAPTIC_BUTTON_OFF_NAME "phone-vibration-off.png"
 #define LIGHT_ON_BUTTON_NAME "light-on-icon.png"
 #define EARN_POINT_ICON_NAME "earn_point_icon.png"
 #define MAXIMUM_NUMBER_ICON_NAME "maximum_number_icon.png"
@@ -65,6 +68,7 @@
 #define KEY_HIGHEST_NUMBER "KEY_HIGHEST_NUMBER"
 #define KEY_FRIST_TIME_OPEN_GAME "KEY_FRIST_TIME_OPEN_GAME"
 #define KEY_SOUND_GAME "KEY_SOUND_GAME"
+#define KEY_HAPTIC_GAME "KEY_HAPTIC_GAME"
 
 #define AD_BANNER_ID "ca-app-pub-2381211844174227/3315056023"
 #define AD_INTERSTITIAL_ID "ca-app-pub-2381211844174227/8375811011"
