@@ -150,3 +150,19 @@ void NumberObject::update(float dt) {
       break;
   }
 }
+
+void NumberObject::runTouchAndDisappearAnimation(function<void()> completion) {
+  auto touchAnimation = CallFunc::create([&, this]() { animationStatus = TOUCH_ANIMATION; });
+  auto hideCallFun = CallFunc::create([&, this]() { this->setVisible(false); });
+  auto completionCallFun = CallFunc::create([&, this, completion]() {
+    animationStatus = REVERT_ANIMATION_AFTER_TOUCH;
+    completion();
+  });
+  auto sequence = Sequence::create(touchAnimation,
+                                   DelayTime::create(0.3),
+                                   hideCallFun,
+                                   DelayTime::create(0.3),
+                                   completionCallFun,
+                                   nullptr);
+  this->runAction(sequence);
+}

@@ -639,12 +639,18 @@ bool GameBoard::handleTouchBeganWhenRemoveNumber(Touch* mTouch, Event* pEvent, f
 }
 
 void GameBoard::removeNumberAt(int row, int column, function<void()> completion) {
-  removeChild(numberObjects[row][column]);
-  numberObjects[row][column] = nullptr;
-  this->handleDropNumber([&, this]{
-    this->fillUpNewNumberForGameBoard([&, this, completion]{
-      this->checkGameOver();
-      completion();
+  if(numberObjects[row][column] == nullptr) {
+    completion();
+    return;
+  }
+  numberObjects[row][column]->runTouchAndDisappearAnimation([&, this, row, column, completion]{
+    this->removeChild(numberObjects[row][column]);
+    this->numberObjects[row][column] = nullptr;
+    this->handleDropNumber([&, this, completion]{
+      this->fillUpNewNumberForGameBoard([&, this, completion]{
+        this->checkGameOver();
+        completion();
+      });
     });
   });
 }

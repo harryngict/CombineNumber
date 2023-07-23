@@ -53,6 +53,7 @@ public:
   void runIncreaseNumberAnimation(int newValue, Color3B newTextColor, Color4F newCircleColor, function<void()> completion);
   void runMoveToAndDisAppearAnimation(const Vec2& source, const Vec2& destination,  function<void()> completion);
   void runMoveToAndAppearAnimation(const Vec2& source, const Vec2& destination, function<void()> completion);
+  void runTouchAndDisappearAnimation(function<void()> completion);
 };
 
 #endif /* NumberObject_h */
