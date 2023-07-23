@@ -59,7 +59,9 @@
 
 - (BOOL) shouldAutorotate { return YES; }
 
-- (BOOL)prefersStatusBarHidden { return YES; }
+- (BOOL)prefersStatusBarHidden { return NO; }
+
+- (UIStatusBarStyle)preferredStatusBarStyle { return UIStatusBarStyleLightContent; }
 
 - (BOOL)prefersHomeIndicatorAutoHidden { return NO; }
 

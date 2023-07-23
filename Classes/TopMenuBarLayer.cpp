@@ -29,7 +29,12 @@ void TopMenuBarLayer::buildUI(float height,
   addChild(backgroundColor);
   
   backButton = CustomButton::create(BACK_BUTTON_NAME, "", [&, this] { handleTapOnBackButton(); });
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+  backButton->setPosition(Vec2(layerSize.width - 48.0, layerSize.height/2.0 - 14.0));
+#endif
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
   backButton->setPosition(Vec2(layerSize.width - 48.0, layerSize.height/2.0));
+#endif
   addChild(backButton);
   
   resetButton = CustomButton::create(RESET_BUTTON_NAME, "", [&, this] { handleTapOnResetButton(); });

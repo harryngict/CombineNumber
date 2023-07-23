@@ -23,7 +23,12 @@ void GameOverLayer::buildUI(float height, Color4B layerColor) {
   this->addChild(backgroundColor);
   
   CustomButton* backButton = CustomButton::create(BACK_BUTTON_NAME, "", [&, this] { handleTapOnBackButton(); });
+  #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+  backButton->setPosition(Vec2(48.0, layerSize.height/2.0 - 14.0));
+  #endif
+  #if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
   backButton->setPosition(Vec2(48.0, layerSize.height/2.0));
+  #endif
   addChild(backButton);
   
   Label* label = Label::createWithTTF("GAME OVER!", FONT_LABEL_NAME, FONT_SIZE_GAME_OVER_LABEL);
