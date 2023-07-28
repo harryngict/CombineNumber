@@ -3,4 +3,7 @@
     <string name="admod_id">ca-app-pub-2381211844174227~2884645339</string>
     <string name="bannerId">ca-app-pub-2381211844174227/9027651357</string>
     <string name="interstitialId">ca-app-pub-2381211844174227/7859191291</string>
+    <string name="app_id" translatable="false">831741265453</string>
+    <string name="package_name" translatable="false">com.boring.combinenumber</string>
+    <string name="leaderboard_combine_number" translatable="false">CgkIrYySvZoYEAIQAg</string>
 </resources>

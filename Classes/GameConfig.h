@@ -61,6 +61,7 @@
 #define GUIDE_ICON_NAME "guide_icon.png"
 #define UNDO_ICON_NAME "undo-icon.png"
 #define REMOVE_NUMBER_ICON_NAME "hammer-icon.png"
+#define TROPHY_ICON_NAME "trophy-icon.png"
 
 #define TITLE_GAME "Combine Number"
 

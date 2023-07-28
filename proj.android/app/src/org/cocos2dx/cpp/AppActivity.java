@@ -25,14 +25,16 @@
 package org.cocos2dx.cpp;
 
 import android.os.Bundle;
+
 import org.cocos2dx.lib.Cocos2dxActivity;
+
 import android.os.Build;
 import android.view.WindowManager;
 import android.os.Vibrator;
 
 public class AppActivity extends Cocos2dxActivity {
-
-    private static AndroidAdManager adManager = null;
+    private static AdMobHelper adMobHelper = null;
+    private static GameHelperHelper gameHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +48,33 @@ public class AppActivity extends Cocos2dxActivity {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             getWindow().setAttributes(lp);
         }
-        adManager = new AndroidAdManager(this);
+        gameHelper = new GameHelperHelper(this);
+        adMobHelper = new AdMobHelper(this);
     }
-
 
     public static void showBanner() {
-        adManager.showBannerAd();
+        adMobHelper.showBannerAd();
     }
 
-    public static void showInterstitial() { adManager.showInterstitial(); }
+    public static void showInterstitial() {
+        adMobHelper.showInterstitial();
+    }
 
-    public  static  boolean isBannerViewVisible() { return adManager.isBannerViewVisible(); }
+    public static boolean isBannerViewVisible() {
+        return adMobHelper.isBannerViewVisible();
+    }
+
+    public static void showLeaderboard() {
+        gameHelper.showLeaderboard();
+    }
+
+    public static void reportScore(int score) {
+        gameHelper.reportScore(score);
+    }
+
+    public static boolean isGooglePlayServicesAvailable() {
+        return gameHelper.isGooglePlayServicesAvailable();
+    }
 
     public static void playHapticFeedback() {
         Vibrator vibrator = (Vibrator) AppActivity.getContext().getSystemService(AppActivity.VIBRATOR_SERVICE);
@@ -68,7 +86,7 @@ public class AppActivity extends Cocos2dxActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        adManager.onDestroy();
+        adMobHelper.onDestroy();
     }
 
     @Override

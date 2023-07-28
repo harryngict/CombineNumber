@@ -67,16 +67,16 @@ private:
 public:
   GameBoard(int rows, int columns);
   virtual ~GameBoard();
+  bool handleTouchBeganWhenRemoveNumber(Touch* mTouch, Event* pEvent, function<void(bool)> completion);
   bool handleTouchBegan(Touch* mTouch, Event* pEvent);
   void handleTouchMove(Touch* mTouch, Event* pEvent);
   void handleTouchEnd(Touch* mTouch, Event* pEvent);
-  bool handleTouchBeganWhenRemoveNumber(Touch* mTouch, Event* pEvent, function<void(bool)> completion);
   void setDelegate(GameBoardDelegate* delegate);
   void resetGameBoard();
-  int getEarnPoint() { return earnPoint; };
-  int getMaximumNumber() { return maximumNumber; };
   void showGuideLineLayer(int status);
   void activateUndoGameBoard(function<void(bool)> completion);
+  int getEarnPoint() { return earnPoint; };
+  int getMaximumNumber() { return maximumNumber; };
 };
 
 #endif /* GameBoard_h */

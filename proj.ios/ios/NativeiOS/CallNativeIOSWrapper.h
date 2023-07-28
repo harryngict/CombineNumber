@@ -18,6 +18,8 @@ public:
   void showInterstitial(std::function<void(bool)> completion);
   bool isBannerViewVisible();
   void playHaptic();
+  void showLeaderboard();
+  void reportScore(int score);
 };
 
 #endif /* CallNativeIOSWrapper_h */

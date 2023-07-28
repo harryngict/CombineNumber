@@ -8,6 +8,7 @@
 #import "CallNativeIOSWrapper.h"
 #import "AdmobIOS.h"
 #import "NativeSystemSound.h"
+#import "GameCenterHelper.h"
 
 
 static CallNativeIOSWrapper _sCallNativeIOSWrapper;
@@ -39,4 +40,13 @@ bool CallNativeIOSWrapper::isBannerViewVisible() {
 
 void CallNativeIOSWrapper::playHaptic() {
   [[NativeSystemSound sharedInstance] playHaptic];
+}
+
+
+void CallNativeIOSWrapper::showLeaderboard() {
+  [[GameCenterHelper sharedInstance] showLeaderboard];
+}
+
+void CallNativeIOSWrapper::reportScore(int score) {
+  [[GameCenterHelper sharedInstance] reportScore: score];
 }

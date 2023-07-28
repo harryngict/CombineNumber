@@ -8,7 +8,7 @@
 #include "TopMenuBarLayer.h"
 #include "GameConfig.h"
 #include "ColorFactory.h"
-#include "SoundManager.h"
+#include "NativeBridge.h"
 
 TopMenuBarLayer::TopMenuBarLayer() {
   currentPoint = 0;
@@ -71,15 +71,15 @@ void TopMenuBarLayer::setDelegate(EventClickButtonDelegate* delegate) {
 
 void TopMenuBarLayer::handleTapOnBackButton() {
   if(delegate == nullptr) { return; };
-  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
-  SoundManager::getInstance()->playHaptic();
+  NativeBridge::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  NativeBridge::getInstance()->playHaptic();
   delegate->clickBackButton();
 }
 
 void TopMenuBarLayer::handleTapOnResetButton() {
   if(delegate == nullptr) { return; };
-  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
-  SoundManager::getInstance()->playHaptic();
+  NativeBridge::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  NativeBridge::getInstance()->playHaptic();
   delegate->clickResetButton();
 }
 

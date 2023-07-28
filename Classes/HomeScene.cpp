@@ -10,7 +10,7 @@
 #include "GameConfig.h"
 #include "GameScene.h"
 #include "CustomButton.h"
-#include "SoundManager.h"
+#include "NativeBridge.h"
 
 HomeScene::HomeScene() {}
 
@@ -31,8 +31,8 @@ bool HomeScene::init() {
   addChild(backgroundColor);
   
   CustomButton* playButton = CustomButton::create(PLAY_BUTTON_NAME, "", []{
-    SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
-    SoundManager::getInstance()->playHaptic();
+    NativeBridge::getInstance()->playSound(CLICK_BUTTON_SOUND);
+    NativeBridge::getInstance()->playHaptic();
     Director::getInstance()->replaceScene(GameScene::createScene());
   });
   

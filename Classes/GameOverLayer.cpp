@@ -10,7 +10,7 @@
 #include "ColorFactory.h"
 #include "ui/CocosGUI.h"
 #include "CustomButton.h"
-#include "SoundManager.h"
+#include "NativeBridge.h"
 
 GameOverLayer::~GameOverLayer() {
   this->delegate = nullptr;
@@ -46,14 +46,14 @@ void GameOverLayer::buildUI(float height, Color4B layerColor) {
 
 void GameOverLayer::handleTapOnBackButton() {
   if(delegate == nullptr) { return; };
-  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
-  SoundManager::getInstance()->playHaptic();
+  NativeBridge::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  NativeBridge::getInstance()->playHaptic();
   delegate->clickBackButton();
 }
 void GameOverLayer::handleTapOnResetButton() {
   if(delegate == nullptr) { return; };
-  SoundManager::getInstance()->playSound(CLICK_BUTTON_SOUND);
-  SoundManager::getInstance()->playHaptic();
+  NativeBridge::getInstance()->playSound(CLICK_BUTTON_SOUND);
+  NativeBridge::getInstance()->playHaptic();
   delegate->clickResetButton();
 }
 

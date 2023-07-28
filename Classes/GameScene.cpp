@@ -8,7 +8,7 @@
 #include "GameConfig.h"
 #include "ColorFactory.h"
 #include "HomeScene.h"
-#include "AdmobManager.h"
+#include "NativeBridge.h"
 
 GameScene::GameScene() {
   isRemoveNumberMode = false;
@@ -142,6 +142,8 @@ void GameScene::fireEarnScoreAndMaximumNumber(int score, int maximumNumber) {
   if(topMenuBarLayer != nullptr) { topMenuBarLayer->updateMaximumNumber(maximumNumber); };
   int currentMaximumNumber = UserDefault::getInstance()->getIntegerForKey(KEY_HIGHEST_NUMBER, 0);
   if(maximumNumber > currentMaximumNumber) { UserDefault::getInstance()->setIntegerForKey(KEY_HIGHEST_NUMBER, maximumNumber); }
+  
+  NativeBridge::getInstance()->reportScore(score);
 }
 
 void GameScene::clickBackButton() {
@@ -194,7 +196,7 @@ void GameScene::clickSuggestionButton() {
 void GameScene::showFullScreenAdvertisement(const char* key, int frequency) {
   int currentCount = UserDefault::getInstance()->getIntegerForKey(key, 0);
   if(currentCount == frequency) {
-    AdmobManager::getInstance()->showInterstitial([](bool result) { });
+    NativeBridge::getInstance()->showInterstitial([](bool result) { });
     UserDefault::getInstance()->setIntegerForKey(key, 0);
   } else {
     UserDefault::getInstance()->setIntegerForKey(key, currentCount + 1);
@@ -207,7 +209,7 @@ void GameScene::clickUndoButton(function<void (bool)> completion) {
 
 void GameScene::update(float dt) {
   if(bottomMenuBarLayer == nullptr) { return; }
-  bool isBannerViewVisible = AdmobManager::getInstance()->isBannerViewVisible();
+  bool isBannerViewVisible = NativeBridge::getInstance()->isBannerViewVisible();
   bottomMenuBarLayer->setPositionY(isBannerViewVisible ? bottomMenuBarLayer->getContentSize().height/2.0 : 0.0);
 }
 
@@ -222,8 +224,8 @@ void GameScene::setDataMenuBarLayer() {
 }
 
 void GameScene::readyToShowAdvertisement() {
-  AdmobManager::getInstance()->init(AD_BANNER_ID, AD_INTERSTITIAL_ID);
-  AdmobManager::getInstance()->showBanner();
+  NativeBridge::getInstance()->init(AD_BANNER_ID, AD_INTERSTITIAL_ID);
+  NativeBridge::getInstance()->showBanner();
   showFullScreenAdvertisement(AD_OPEN_GAME_KEY, AD_OPEN_GAME_FREQUENCY);
 }
 

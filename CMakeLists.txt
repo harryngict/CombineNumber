@@ -48,7 +48,6 @@ endif()
 
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
-     Classes/AdmobManager.cpp
      Classes/AndroidLaunchingScene.cpp
      Classes/AppDelegate.cpp
      Classes/BottomMenuBarLayer.cpp
@@ -61,11 +60,10 @@ list(APPEND GAME_SOURCE
      Classes/HomeScene.cpp
      Classes/NumberObject.cpp
      Classes/RandomNumber.cpp
-     Classes/SoundManager.cpp
+     Classes/NativeBridge.cpp
      Classes/TopMenuBarLayer.cpp
      )
 list(APPEND GAME_HEADER
-     Classes/AdmobManager.h
      Classes/AndroidLaunchingScene.h
      Classes/AppDelegate.h
      Classes/BottomMenuBarLayer.h
@@ -82,7 +80,7 @@ list(APPEND GAME_HEADER
      Classes/HomeScene.h
      Classes/NumberObject.h
      Classes/RandomNumber.h
-     Classes/SoundManager.h
+     Classes/NativeBridge.h
      Classes/TopMenuBarLayer.h
      Classes/UndoData.h
      )

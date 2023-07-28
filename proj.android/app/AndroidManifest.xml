@@ -18,6 +18,9 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admod_id" />
 
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/app_id"/>
+
         <activity
             android:name="org.cocos2dx.cpp.AppActivity"
             android:screenOrientation="portrait"

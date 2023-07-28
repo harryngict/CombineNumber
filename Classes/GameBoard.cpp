@@ -9,7 +9,7 @@
 #include "GameConfig.h"
 #include "RandomNumber.h"
 #include "ColorFactory.h"
-#include "SoundManager.h"
+#include "NativeBridge.h"
 
 GameBoard::GameBoard(int rows, int columns) {
   this->rows = rows;
@@ -85,8 +85,8 @@ bool GameBoard::handleTouchBegan(Touch* mTouch, Event* pEvent) {
   highLightSameNumber(touchNumber);
   touchNumber->setAnimationStatus(TOUCH_ANIMATION);
   stackTouchNumbers.push(touchNumber);
-  SoundManager::getInstance()->playSound(TOUCH_NUMBER_SOUND);
-  SoundManager::getInstance()->playHaptic();
+  NativeBridge::getInstance()->playSound(TOUCH_NUMBER_SOUND);
+  NativeBridge::getInstance()->playHaptic();
   return true;
 }
 
@@ -113,8 +113,8 @@ void GameBoard::handleTouchMove(Touch* mTouch, Event* pEvent) {
       touchNumber->setAnimationStatus(TOUCH_ANIMATION);
       stackTouchNumbers.push(touchNumber);
       addLineWhenMove(headStack->getMatrix(), touchNumber->getMatrix(), touchNumber->getCircleColor());
-      SoundManager::getInstance()->playSound(TOUCH_NUMBER_SOUND);
-      SoundManager::getInstance()->playHaptic();
+      NativeBridge::getInstance()->playSound(TOUCH_NUMBER_SOUND);
+      NativeBridge::getInstance()->playHaptic();
     }
   }
 }
@@ -214,7 +214,7 @@ void GameBoard::handleConnectNumber(function<void()> completion) {
                                                                                                                   ColorFactory::GetInstance()->getTextColor(),
                                                                                                                   ColorFactory::GetInstance()->getCircleColor(newValue),
                                                                                                                   completion);
-          SoundManager::getInstance()->playSound(INCREASE_NEW_NUMBER_SOUND);
+          NativeBridge::getInstance()->playSound(INCREASE_NEW_NUMBER_SOUND);
           return;
         }
       });
@@ -485,7 +485,7 @@ bool GameBoard::checkGameOver() {
     return false;
   } else {
     delegate->fireGameOverEvent();
-    SoundManager::getInstance()->playSound(GAME_OVER_SOUND);
+    NativeBridge::getInstance()->playSound(GAME_OVER_SOUND);
     return true;
   }
 }
@@ -625,8 +625,8 @@ bool GameBoard::handleTouchBeganWhenRemoveNumber(Touch* mTouch, Event* pEvent, f
     completion(false);
     return false;
   }
-  SoundManager::getInstance()->playSound(REMOVE_NUMBER_SOUND);
-  SoundManager::getInstance()->playHaptic();
+  NativeBridge::getInstance()->playSound(REMOVE_NUMBER_SOUND);
+  NativeBridge::getInstance()->playHaptic();
   Vec2 matrix = convertPositionToGameBoardMatrix(pos);
   removeOneNumberAt(matrix.x, matrix.y, [&, completion] {
     completion(true);

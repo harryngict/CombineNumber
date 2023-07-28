@@ -16,9 +16,9 @@ ColorFactory *ColorFactory::GetInstance() {
 }
 
 Color4F ColorFactory::getCircleColor(int number) {
-  int red = (number * 73) % 256; // Manipulate the red component based on the number
-  int green = (number * 127) % 256; // Manipulate the green component based on the number
-  int blue = (number * 179) % 256; // Manipulate the blue component based on the number
+  int red = (number * 73) % 256;
+  int green = (number * 127) % 256;
+  int blue = (number * 179) % 256;
   return Color4F(red, green, blue, 0.96);
 }
 

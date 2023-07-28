@@ -21,7 +21,6 @@
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
-		86586EBD2A66627D00E3D0F7 /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86586EBB2A66627D00E3D0F7 /* SoundManager.cpp */; };
 		86586EC62A66676500E3D0F7 /* click_button_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86586EC12A66676400E3D0F7 /* click_button_sound.mp3 */; };
 		86586EC82A66676500E3D0F7 /* touch_number_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86586EC32A66676400E3D0F7 /* touch_number_sound.mp3 */; };
 		86586ECA2A66676500E3D0F7 /* increase_number_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86586EC52A66676500E3D0F7 /* increase_number_sound.mp3 */; };
@@ -30,7 +29,6 @@
 		868A50852A61800A00B8B54F /* play_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 868A50842A61800A00B8B54F /* play_button.png */; };
 		868A508E2A61AFEC00B8B54F /* guide_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 868A508D2A61AFEC00B8B54F /* guide_icon.png */; };
 		868A50912A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 868A508F2A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp */; };
-		868A50982A61F7FD00B8B54F /* AdmobManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 868A50962A61F7FD00B8B54F /* AdmobManager.cpp */; };
 		868A509C2A61F8A900B8B54F /* CallNativeIOSWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 868A509B2A61F8A900B8B54F /* CallNativeIOSWrapper.mm */; };
 		868A509F2A61F91100B8B54F /* AdmobIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 868A509E2A61F91100B8B54F /* AdmobIOS.m */; };
 		868A50C52A61F9AB00B8B54F /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868A50B92A61F9AB00B8B54F /* nanopb.xcframework */; };
@@ -69,6 +67,9 @@
 		DD0BD5352A6AF51400B5547B /* undo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0BD5342A6AF51400B5547B /* undo-icon.png */; };
 		DD3A06712A66C1CC006CBA53 /* sound-on-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD3A066F2A66C1CC006CBA53 /* sound-on-icon.png */; };
 		DD3A06722A66C1CC006CBA53 /* sound-off-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD3A06702A66C1CC006CBA53 /* sound-off-icon.png */; };
+		DD7CD4AB2A73EB0A0022E212 /* trophy-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD7CD4AA2A73EB0A0022E212 /* trophy-icon.png */; };
+		DD7CD4B02A73ECEB0022E212 /* GameCenterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7CD4AF2A73ECEB0022E212 /* GameCenterHelper.m */; };
+		DD7CD4B42A74129D0022E212 /* NativeBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD7CD4B22A74129D0022E212 /* NativeBridge.cpp */; };
 		DDA8A46C2A6A9D22008BEFD3 /* launching-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = DDA8A46B2A6A9D22008BEFD3 /* launching-screen.png */; };
 		DDCECDC72A6BF00000883213 /* hammer-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCECDC62A6BF00000883213 /* hammer-icon.png */; };
 		DDCECDCA2A6C03F200883213 /* earn_point_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCECDC82A6C03F200883213 /* earn_point_icon.png */; };
@@ -125,8 +126,6 @@
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		86171BFD2A638A1B007A94B3 /* CustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
-		86586EBB2A66627D00E3D0F7 /* SoundManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
-		86586EBC2A66627D00E3D0F7 /* SoundManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
 		86586EC12A66676400E3D0F7 /* click_button_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click_button_sound.mp3; sourceTree = "<group>"; };
 		86586EC32A66676400E3D0F7 /* touch_number_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = touch_number_sound.mp3; sourceTree = "<group>"; };
 		86586EC52A66676500E3D0F7 /* increase_number_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = increase_number_sound.mp3; sourceTree = "<group>"; };
@@ -137,8 +136,6 @@
 		868A508D2A61AFEC00B8B54F /* guide_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_icon.png; sourceTree = "<group>"; };
 		868A508F2A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuideLinePopUpLayer.cpp; sourceTree = "<group>"; };
 		868A50902A61BBEF00B8B54F /* GuideLinePopUpLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuideLinePopUpLayer.h; sourceTree = "<group>"; };
-		868A50962A61F7FD00B8B54F /* AdmobManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdmobManager.cpp; sourceTree = "<group>"; };
-		868A50972A61F7FD00B8B54F /* AdmobManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdmobManager.h; sourceTree = "<group>"; };
 		868A509A2A61F87200B8B54F /* CallNativeIOSWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallNativeIOSWrapper.h; sourceTree = "<group>"; };
 		868A509B2A61F8A900B8B54F /* CallNativeIOSWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CallNativeIOSWrapper.mm; sourceTree = "<group>"; };
 		868A509D2A61F8F300B8B54F /* AdmobIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdmobIOS.h; sourceTree = "<group>"; };
@@ -194,6 +191,12 @@
 		DD0BD5372A6B062000B5547B /* UndoData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UndoData.h; sourceTree = "<group>"; };
 		DD3A066F2A66C1CC006CBA53 /* sound-on-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-on-icon.png"; sourceTree = "<group>"; };
 		DD3A06702A66C1CC006CBA53 /* sound-off-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-off-icon.png"; sourceTree = "<group>"; };
+		DD7CD4AA2A73EB0A0022E212 /* trophy-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trophy-icon.png"; sourceTree = "<group>"; };
+		DD7CD4AC2A73EB9E0022E212 /* GameCenterHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterHelper.h; sourceTree = "<group>"; };
+		DD7CD4AF2A73ECEB0022E212 /* GameCenterHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameCenterHelper.m; sourceTree = "<group>"; };
+		DD7CD4B12A740F370022E212 /* CombineNumber.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CombineNumber.entitlements; sourceTree = "<group>"; };
+		DD7CD4B22A74129D0022E212 /* NativeBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NativeBridge.cpp; sourceTree = "<group>"; };
+		DD7CD4B32A74129D0022E212 /* NativeBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativeBridge.h; sourceTree = "<group>"; };
 		DDA8A46B2A6A9D22008BEFD3 /* launching-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launching-screen.png"; sourceTree = "<group>"; };
 		DDCECDC62A6BF00000883213 /* hammer-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hammer-icon.png"; sourceTree = "<group>"; };
 		DDCECDC82A6C03F200883213 /* earn_point_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earn_point_icon.png; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				DD7CD4B12A740F370022E212 /* CombineNumber.entitlements */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
@@ -335,8 +339,6 @@
 			children = (
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
-				868A50972A61F7FD00B8B54F /* AdmobManager.h */,
-				868A50962A61F7FD00B8B54F /* AdmobManager.cpp */,
 				86DD549929496BC1009AA4DC /* AndroidLaunchingScene.h */,
 				86DD54A029496BC2009AA4DC /* AndroidLaunchingScene.cpp */,
 				86EEFFAE2A61032200B1D37F /* ColorFactory.h */,
@@ -365,9 +367,9 @@
 				8692E0922A5E58DF002B21DD /* GameConfig.h */,
 				86EEFFB32A6145D000B1D37F /* GameBoardDelegate.h */,
 				86EEFFBA2A6163D200B1D37F /* EventClickButtonDelegate.h */,
-				86586EBC2A66627D00E3D0F7 /* SoundManager.h */,
-				86586EBB2A66627D00E3D0F7 /* SoundManager.cpp */,
 				DD0BD5372A6B062000B5547B /* UndoData.h */,
+				DD7CD4B32A74129D0022E212 /* NativeBridge.h */,
+				DD7CD4B22A74129D0022E212 /* NativeBridge.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -390,6 +392,8 @@
 			children = (
 				868A509A2A61F87200B8B54F /* CallNativeIOSWrapper.h */,
 				868A509B2A61F8A900B8B54F /* CallNativeIOSWrapper.mm */,
+				DD7CD4AC2A73EB9E0022E212 /* GameCenterHelper.h */,
+				DD7CD4AF2A73ECEB0022E212 /* GameCenterHelper.m */,
 				868A509D2A61F8F300B8B54F /* AdmobIOS.h */,
 				868A509E2A61F91100B8B54F /* AdmobIOS.m */,
 				DDD7B6D72A6CD980006A9ABE /* NativeSystemSound.h */,
@@ -428,6 +432,7 @@
 		868E5A5E2944A97F0087D208 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DD7CD4AA2A73EB0A0022E212 /* trophy-icon.png */,
 				DDD7B6DB2A6CE85F006A9ABE /* phone-vibration-off.png */,
 				DDD7B6DC2A6CE85F006A9ABE /* phone-vibration-on.png */,
 				DDCECDC82A6C03F200883213 /* earn_point_icon.png */,
@@ -522,6 +527,7 @@
 			files = (
 				DDCECDCA2A6C03F200883213 /* earn_point_icon.png in Resources */,
 				868A50C92A61F9AB00B8B54F /* GoogleUtilities-LICENSE in Resources */,
+				DD7CD4AB2A73EB0A0022E212 /* trophy-icon.png in Resources */,
 				DD3A06712A66C1CC006CBA53 /* sound-on-icon.png in Resources */,
 				868A50C62A61F9AB00B8B54F /* Promises-LICENSE in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
@@ -565,18 +571,18 @@
 				86DD54B929496BC2009AA4DC /* AndroidLaunchingScene.cpp in Sources */,
 				86EEFFB92A614C8E00B1D37F /* TopMenuBarLayer.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
-				868A50982A61F7FD00B8B54F /* AdmobManager.cpp in Sources */,
 				868A509C2A61F8A900B8B54F /* CallNativeIOSWrapper.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				8692E0902A5E5769002B21DD /* GameBoard.cpp in Sources */,
+				DD7CD4B42A74129D0022E212 /* NativeBridge.cpp in Sources */,
 				868A50832A616B2E00B8B54F /* HomeScene.cpp in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
 				8692E09D2A5E9215002B21DD /* NumberObject.cpp in Sources */,
 				86EEFFAC2A60FE6A00B1D37F /* RandomNumber.cpp in Sources */,
 				8692E0A42A604400002B21DD /* DrawLineObject.cpp in Sources */,
 				868A50912A61BBEF00B8B54F /* GuideLinePopUpLayer.cpp in Sources */,
-				86586EBD2A66627D00E3D0F7 /* SoundManager.cpp in Sources */,
 				868A509F2A61F91100B8B54F /* AdmobIOS.m in Sources */,
+				DD7CD4B02A73ECEB0022E212 /* GameCenterHelper.m in Sources */,
 				DDD7B6D92A6CD9B7006A9ABE /* NativeSystemSound.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -600,10 +606,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = CombineNumber.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMPRESS_PNG_FILES = NO;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6QDW32DV2Z;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = arm64;
@@ -628,7 +635,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.4;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
@@ -661,10 +668,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = CombineNumber.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMPRESS_PNG_FILES = NO;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6QDW32DV2Z;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -688,7 +696,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.4;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
