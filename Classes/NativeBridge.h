@@ -22,6 +22,7 @@ public:
   void showInterstitial(std::function<void(bool)> completion);
   bool isBannerViewVisible();
   void playSound(int tag);
+  void playBackgroundSound(bool isTurnOn);
   void playHaptic();  
   void showLeaderboard();
   void reportScore(int score);

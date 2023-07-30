@@ -101,9 +101,19 @@ void NativeBridge::playSound(int tag) {
     default: break;
   }
   if(filePath.empty()) { return; }
-  auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-  audio->preloadEffect(filePath.c_str());
-  audio->playEffect(filePath.c_str());
+  CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(filePath.c_str());
+  CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.0f);
+  CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(filePath.c_str());
+}
+
+void NativeBridge::playBackgroundSound(bool isTurnOn) {
+  if(isTurnOn) {
+    CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background.mp3");
+    CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.8f);
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3", true);
+  } else {
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+  }
 }
 
 void NativeBridge::playHaptic() {
@@ -146,13 +156,14 @@ void NativeBridge::reportScore(int score) {
 bool NativeBridge::isLeaderBoardAvailable() {
   bool result = true;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-   JNIEnv* env = cocos2d::JniHelper::getEnv();
-   jclass javaClass = env->FindClass("org/cocos2dx/cpp/AppActivity");
-   jmethodID methodID = env->GetStaticMethodID(javaClass, "isGooglePlayServicesAvailable", "()Z");
-   if (javaClass && methodID) {
-       result = (bool)env->CallStaticBooleanMethod(javaClass, methodID);
-       env->DeleteLocalRef(javaClass);
-   }
+//   JNIEnv* env = cocos2d::JniHelper::getEnv();
+//   jclass javaClass = env->FindClass("org/cocos2dx/cpp/AppActivity");
+//   jmethodID methodID = env->GetStaticMethodID(javaClass, "isGooglePlayServicesAvailable", "()Z");
+//   if (javaClass && methodID) {
+//       result = (bool)env->CallStaticBooleanMethod(javaClass, methodID);
+//       env->DeleteLocalRef(javaClass);
+//   }
+  result = false;
 #endif
    return result;
 }

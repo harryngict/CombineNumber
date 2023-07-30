@@ -39,6 +39,7 @@ void BottomMenuBarLayer::buildUI(float height, Color4B layerColor) {
                                      "", [&, this] { handleTapOnSoundButton(); });
   soundButton->setPosition(Vec2(48.0, suggestionButton->getPositionY()));
   addChild(soundButton);
+  NativeBridge::getInstance()->playBackgroundSound(isSoundOn);
   
   bool isHapticOn = UserDefault::getInstance()->getBoolForKey(KEY_HAPTIC_GAME, true);
   hapticButton = CustomButton::create(isHapticOn ? HAPTIC_BUTTON_ON_NAME : HAPTIC_BUTTON_OFF_NAME,
@@ -129,9 +130,11 @@ void BottomMenuBarLayer::handleTapOnSoundButton() {
   if(UserDefault::getInstance()->getBoolForKey(KEY_SOUND_GAME, true)) {
     UserDefault::getInstance()->setBoolForKey(KEY_SOUND_GAME, false);
     soundButton->loadTextureNormal(SOUND_BUTTON_OFF_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
+    NativeBridge::getInstance()->playBackgroundSound(false);
   } else {
     UserDefault::getInstance()->setBoolForKey(KEY_SOUND_GAME, true);
     soundButton->loadTextureNormal(SOUND_BUTTON_ON_NAME, cocos2d::ui::Button::TextureResType::LOCAL);
+    NativeBridge::getInstance()->playBackgroundSound(true);
   }
   NativeBridge::getInstance()->playSound(CLICK_BUTTON_SOUND);
   NativeBridge::getInstance()->playHaptic();

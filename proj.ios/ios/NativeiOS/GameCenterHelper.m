@@ -37,24 +37,37 @@
   }];
 }
 
--(void)displayLeaderboard {
+-(void)presentGameCenter:(GKGameCenterViewControllerState)state {
   GKGameCenterViewController *viewController = [[GKGameCenterViewController alloc] init];
   if (viewController) {
     viewController.gameCenterDelegate = self;
     viewController.leaderboardIdentifier = LEADERBOARD_ID;
-    viewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+    viewController.viewState = state;
     [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+  }
+}
+
+-(void)checkGameCenterWithAuthentication:(GKGameCenterViewControllerState)state {
+  GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+  if (localPlayer.isAuthenticated) {
+    [self presentGameCenter: state];
+  } else {
+    [self authenticatePlayerWithCompletionHandler:^(BOOL success, NSError *error) {
+      if (success) {
+        [self presentGameCenter: state];
+      }
+    }];
   }
 }
 
 - (void)showLeaderboard {
   GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
   if (localPlayer.isAuthenticated) {
-    [self displayLeaderboard];
+    [self checkGameCenterWithAuthentication: GKGameCenterViewControllerStateLeaderboards];
   } else {
     [self authenticatePlayerWithCompletionHandler:^(BOOL success, NSError *error) {
       if (success) {
-        [self displayLeaderboard];
+        [self checkGameCenterWithAuthentication: GKGameCenterViewControllerStateLeaderboards];
       }
     }];
   }

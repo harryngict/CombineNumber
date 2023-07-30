@@ -137,13 +137,14 @@ void GameScene::fireGameOverEvent() {
 void GameScene::fireEarnScoreAndMaximumNumber(int score, int maximumNumber) {
   if(topMenuBarLayer != nullptr) { topMenuBarLayer->updateEarnPoint(score); };
   int currentMaxEarnPoint = UserDefault::getInstance()->getIntegerForKey(KEY_HIGHEST_EARN_POINT, 0);
-  if(score > currentMaxEarnPoint) { UserDefault::getInstance()->setIntegerForKey(KEY_HIGHEST_EARN_POINT, score); }
+  if(score > currentMaxEarnPoint) {
+    UserDefault::getInstance()->setIntegerForKey(KEY_HIGHEST_EARN_POINT, score);
+    NativeBridge::getInstance()->reportScore(score);
+  }
   
   if(topMenuBarLayer != nullptr) { topMenuBarLayer->updateMaximumNumber(maximumNumber); };
   int currentMaximumNumber = UserDefault::getInstance()->getIntegerForKey(KEY_HIGHEST_NUMBER, 0);
   if(maximumNumber > currentMaximumNumber) { UserDefault::getInstance()->setIntegerForKey(KEY_HIGHEST_NUMBER, maximumNumber); }
-  
-  NativeBridge::getInstance()->reportScore(score);
 }
 
 void GameScene::clickBackButton() {

@@ -70,6 +70,6 @@ bool HomeScene::init() {
   highestNumberLabel->setPosition(Vec2(numberIcon->getPositionX(), numberIcon->getPositionY() - 80.0));
   highestNumberLabel->setColor(ColorFactory::GetInstance()->getTextColor());
   addChild(highestNumberLabel);
-  
+  NativeBridge::getInstance()->playBackgroundSound(false);
   return true;
 }

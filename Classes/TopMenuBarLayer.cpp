@@ -41,6 +41,8 @@ void TopMenuBarLayer::buildUI(float height,
   resetButton->setPosition(Vec2(backButton->getPositionX() - 80.0, backButton->getPositionY()));
   addChild(resetButton);
   
+  
+  
   Sprite* maximumNumberIcon = Sprite::create(MAXIMUM_NUMBER_ICON_NAME);
   maximumNumberIcon->setPosition(48.0, resetButton->getPositionY());
   addChild(maximumNumberIcon);

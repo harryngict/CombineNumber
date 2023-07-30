@@ -7,7 +7,7 @@
 
 #import "CallNativeIOSWrapper.h"
 #import "AdmobIOS.h"
-#import "NativeSystemSound.h"
+#import "HapticEngine.h"
 #import "GameCenterHelper.h"
 
 
@@ -39,7 +39,7 @@ bool CallNativeIOSWrapper::isBannerViewVisible() {
 }
 
 void CallNativeIOSWrapper::playHaptic() {
-  [[NativeSystemSound sharedInstance] playHaptic];
+  [[HapticEngine sharedInstance] playHaptic];
 }
 
 
